@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: realtor_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-realtor_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-realtor_secret_password}
+      POSTGRES_DB: ${POSTGRES_DB:-realtor_db}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-realtor_user} -d ${POSTGRES_DB:-realtor_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    container_name: realtor_fastapi
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg2://realtor_user:realtor_secret_password@db:5432/realtor_db}
+      SECRET_KEY: ${SECRET_KEY:-change-me-in-production-super-secret-jwt-key}
+      STORAGE_DIR: /app/storage
+      AGENCY_NAME: ${AGENCY_NAME:-ИП Голубина Ольга Геннадьевна}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./storage:/app/storage
+
+volumes:
+  postgres_data:

@@ -1,0 +1,240 @@
+{% extends "app_base.html" %}
+
+{% block title %}Объекты недвижимости{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Объекты недвижимости</h1>
+  <p class="muted">Учет объектов, расчет стоимости за м², аналитика по районам и автоматизированный подбор по бюджету клиента.</p>
+</header>
+
+<section class="card">
+  <h2>Поиск и автоподбор объектов</h2>
+  <form method="get" action="/properties" class="form">
+    <div class="form-grid">
+      {% if is_staff %}
+      <label class="field">
+        <span>Подбор под клиента (авто-бюджет и район)</span>
+        <select name="match_client_id">
+          <option value="">— Без привязки к клиенту —</option>
+          {% for c in clients %}
+          <option value="{{ c.id_client }}" {% if filters.match_client_id == c.id_client %}selected{% endif %}>
+            {{ c.user.full_name }} (до {{ (c.preferred_budget_max or 0) | money }})
+          </option>
+          {% endfor %}
+        </select>
+      </label>
+      {% endif %}
+
+      <label class="field">
+        <span>Район</span>
+        <select name="district_id">
+          <option value="">Все районы</option>
+          {% for d in districts %}
+          <option value="{{ d.id_district }}" {% if filters.district_id == d.id_district %}selected{% endif %}>{{ d.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Категория</span>
+        <select name="category_id">
+          <option value="">Любая</option>
+          {% for c in categories %}
+          <option value="{{ c.id_property_type }}" {% if filters.category_id == c.id_property_type %}selected{% endif %}>{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Макс. цена (₽)</span>
+        <input type="number" name="max_price" step="50000" value="{{ filters.max_price }}" placeholder="Например 10000000" />
+      </label>
+
+      <label class="field">
+        <span>Мин. площадь (м²)</span>
+        <input type="number" name="min_area" step="1" value="{{ filters.min_area }}" placeholder="От 40" />
+      </label>
+
+      <label class="field">
+        <span>Комнат</span>
+        <input type="number" name="rooms" min="1" value="{{ filters.rooms or '' }}" placeholder="Любое" />
+      </label>
+    </div>
+    <div class="actions-row">
+      <button type="submit" class="btn btn-primary">Подобрать объекты</button>
+      <a href="/properties" class="btn btn-small">Сбросить фильтры</a>
+      {% if matched_client %}
+      <span class="status-tag ok">
+        Подбор для: {{ matched_client.user.full_name }}
+      </span>
+      {% endif %}
+    </div>
+  </form>
+</section>
+
+{% if is_staff and analytics_rows %}
+<section class="card section-gap">
+  <h2>Аналитика рынка по районам (средняя цена и цена за м²)</h2>
+  <div class="grid-three">
+    {% for row in analytics_rows %}
+    <div class="metric-box">
+      <div class="muted text-xs">{{ row.district_name }} ({{ row.count }} об.)</div>
+      <div class="metric-box-value">{{ row.avg_price | money }}</div>
+      <div class="muted text-sm tabular">
+        ~{{ row.avg_sqm | money(" ₽/м²") }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if is_staff %}
+<section class="card section-gap">
+  <h2>Добавить объект недвижимости</h2>
+  <form method="post" action="/properties/create" class="form">
+    <div class="form-grid">
+      <label class="field">
+        <span>Кадастровый номер ЕГРН *</span>
+        <input type="text" name="cadastral_number" required placeholder="66:41:0000000:000" />
+      </label>
+      <label class="field">
+        <span>Адрес *</span>
+        <input type="text" name="address" required placeholder="г. Екатеринбург, ул. ..." />
+      </label>
+      <label class="field">
+        <span>Район *</span>
+        <select name="district_id" required>
+          {% for d in districts %}
+          <option value="{{ d.id_district }}">{{ d.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Категория *</span>
+        <select name="category_id" required>
+          {% for c in categories %}
+          <option value="{{ c.id_property_type }}">{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Общая площадь (м²) *</span>
+        <input type="number" name="total_area" step="0.1" min="1" required />
+      </label>
+      <label class="field">
+        <span>Комнат *</span>
+        <input type="number" name="rooms_count" min="1" required />
+      </label>
+      <label class="field">
+        <span>Этаж *</span>
+        <input type="number" name="floor" min="1" required />
+      </label>
+      <label class="field">
+        <span>Стоимость (₽) *</span>
+        <input type="number" name="price" step="1000" min="1000" required />
+      </label>
+      <label class="field">
+        <span>Тип здания *</span>
+        <select name="building_type_id" required>
+          {% for b in building_types %}
+          <option value="{{ b.id_building_type }}">{{ b.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Ремонт *</span>
+        <select name="repair_type_id" required>
+          {% for r in repair_types %}
+          <option value="{{ r.id_repair_type }}">{{ r.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Статус *</span>
+        <select name="status_id" required>
+          {% for s in statuses %}
+          <option value="{{ s.id_status }}">{{ s.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Оценка локации (0–10)</span>
+        <input type="number" name="location_rating" step="0.1" min="0" max="10" value="8.5" />
+      </label>
+    </div>
+    <label class="field">
+      <span>Описание</span>
+      <textarea name="description" rows="2" placeholder="Дополнительные характеристики..."></textarea>
+    </label>
+    <div>
+      <button type="submit" class="btn btn-primary">Сохранить объект</button>
+    </div>
+  </form>
+</section>
+{% endif %}
+
+<section class="card section-gap">
+  <h2>Реестр объектов ({{ properties | length }})</h2>
+  {% if properties %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Адрес и кадастр</th>
+          <th>Параметры</th>
+          <th>Стоимость и ₽/м²</th>
+          <th>Статус</th>
+          {% if is_senior %}
+          <th>Управление</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in properties %}
+        <tr>
+          <td>
+            <strong>{{ p.address }}</strong><br />
+            <span class="muted text-xs tabular">
+              {{ p.district.name }} • {{ p.category.name }} • ЕГРН: {{ p.cadastral_number }}
+            </span>
+          </td>
+          <td class="tabular">
+            {{ p.total_area }} м² • {{ p.rooms_count }} комн. • {{ p.floor }} эт.<br />
+            <span class="muted text-xs">{{ p.building_type.name }}, {{ p.repair_type.name }}</span>
+          </td>
+          <td class="tabular">
+            <strong>{{ p.price | money }}</strong><br />
+            <span class="muted text-xs">{{ sqm_price(p.price, p.total_area) }}</span>
+          </td>
+          <td>
+            <span class="status-tag {% if p.status.name == 'Доступен' %}ok{% elif p.status.name == 'Забронирован' %}warn{% endif %}">
+              {{ p.status.name }}
+            </span>
+          </td>
+          {% if is_senior %}
+          <td>
+            <form method="post" action="/properties/{{ p.id_property }}/status" class="actions-row cell-form-stack">
+              <select name="status_id" class="select-compact">
+                {% for s in statuses %}
+                <option value="{{ s.id_status }}" {% if s.id_status == p.id_status %}selected{% endif %}>{{ s.name }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="btn btn-small">Ок</button>
+            </form>
+            <form method="post" action="/properties/{{ p.id_property }}/delete">
+              <button type="submit" class="btn btn-danger-outline">Удалить</button>
+            </form>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">Объекты не найдены.</p>
+  {% endif %}
+</section>
+{% endblock %}

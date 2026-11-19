@@ -1,0 +1,154 @@
+{% extends "app_base.html" %}
+
+{% block title %}База клиентов{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>База клиентов</h1>
+  <p class="muted">Регистрация клиентов, фиксация бюджета, предпочтительного района и паспортных реквизитов для договоров.</p>
+</header>
+
+<section class="card">
+  <h2>Добавить клиента</h2>
+  <form method="post" action="/clients/create" class="form">
+    <div class="form-grid">
+      <label class="field">
+        <span>ФИО *</span>
+        <input type="text" name="full_name" required placeholder="Фамилия Имя Отчество" />
+      </label>
+      <label class="field">
+        <span>Логин *</span>
+        <input type="text" name="login" required placeholder="client_login" />
+      </label>
+      <label class="field">
+        <span>Телефон *</span>
+        <input type="text" name="phone" required placeholder="+7 (900) 000-00-00" />
+      </label>
+      <label class="field">
+        <span>Email *</span>
+        <input type="email" name="email" required placeholder="email@example.ru" />
+      </label>
+      <label class="field">
+        <span>ИНН</span>
+        <input type="text" name="inn" maxlength="12" placeholder="12 цифр" />
+      </label>
+      <label class="field">
+        <span>Макс. бюджет (₽)</span>
+        <input type="number" name="preferred_budget_max" step="50000" placeholder="9000000" />
+      </label>
+      <label class="field">
+        <span>Предпочитаемый район</span>
+        <select name="preferred_district_id">
+          <option value="">— Не указан —</option>
+          {% for d in districts %}
+          <option value="{{ d.id_district }}">{{ d.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Источник обращения</span>
+        <select name="lead_source_id">
+          {% for ls in lead_sources %}
+          <option value="{{ ls.id_lead_source }}">{{ ls.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Сегмент клиента</span>
+        <select name="client_tier_id">
+          {% for ct in client_tiers %}
+          <option value="{{ ct.id_client_tier }}">{{ ct.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+
+    <details class="tags-help">
+      <summary>Паспортные данные (для автоматического заполнения договоров)</summary>
+      <div class="form-grid form-subgrid">
+        <label class="field">
+          <span>Серия (4 цифры)</span>
+          <input type="text" name="passport_series" maxlength="4" placeholder="6518" />
+        </label>
+        <label class="field">
+          <span>Номер (6 цифр)</span>
+          <input type="text" name="passport_number" maxlength="6" placeholder="123456" />
+        </label>
+        <label class="field">
+          <span>Дата выдачи</span>
+          <input type="date" name="issue_date" />
+        </label>
+        <label class="field">
+          <span>Код подразделения</span>
+          <input type="text" name="department_code" maxlength="7" placeholder="660-001" />
+        </label>
+        <label class="field">
+          <span>Кем выдан</span>
+          <input type="text" name="issued_by" placeholder="ГУ МВД России..." />
+        </label>
+      </div>
+    </details>
+
+    <label class="field">
+      <span>Заметки и пожелания</span>
+      <textarea name="notes" rows="2"></textarea>
+    </label>
+    <div>
+      <button type="submit" class="btn btn-primary">Сохранить клиента</button>
+    </div>
+  </form>
+</section>
+
+<section class="card section-gap">
+  <h2>Список клиентов ({{ clients | length }})</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ФИО и контакты</th>
+          <th>Сегмент / Источник</th>
+          <th>Пожелания и бюджет</th>
+          <th>Паспорт / ИНН</th>
+          <th>Подбор</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in clients %}
+        <tr>
+          <td>
+            <strong>{{ c.user.full_name }}</strong><br />
+            <span class="muted text-xs tabular">{{ c.user.phone }} • {{ c.user.email }}</span>
+          </td>
+          <td>
+            {{ c.client_tier.name if c.client_tier else "—" }}<br />
+            <span class="muted text-xs">{{ c.lead_source.name if c.lead_source else "—" }}</span>
+          </td>
+          <td class="tabular">
+            {% if c.preferred_budget_max %}
+            до <strong>{{ c.preferred_budget_max | money }}</strong><br />
+            {% endif %}
+            <span class="muted text-xs">
+              {{ c.preferred_district.name if c.preferred_district else "Любой район" }}
+              {% if c.notes %} — {{ c.notes }}{% endif %}
+            </span>
+          </td>
+          <td class="tabular">
+            ИНН: {{ c.user.inn or "—" }}<br />
+            <span class="muted text-xs">
+              {% if c.user.passport %}
+              Паспорт: {{ c.user.passport.passport_series }} {{ c.user.passport.passport_number }}
+              {% else %}
+              Паспорт не заполнен
+              {% endif %}
+            </span>
+          </td>
+          <td>
+            <a href="/properties?match_client_id={{ c.id_client }}" class="btn btn-small">Подобрать объект</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

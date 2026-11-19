@@ -1,0 +1,173 @@
+{% extends "app_base.html" %}
+
+{% block title %}Администрирование{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Панель администрирования</h1>
+  <p class="muted">Управление учетными записями пользователей, ролевой моделью и настройками приложения / страницы «О себе».</p>
+</header>
+
+<section class="grid-two">
+  <div class="card">
+    <h2>Создать пользователя</h2>
+    <form method="post" action="/admin/users/create" class="form">
+      <div class="form-grid">
+        <label class="field">
+          <span>ФИО *</span>
+          <input type="text" name="full_name" required />
+        </label>
+        <label class="field">
+          <span>Роль *</span>
+          <select name="role_id" required>
+            {% for r in roles %}
+            <option value="{{ r.id_role }}">{{ r.name }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label class="field">
+          <span>Логин *</span>
+          <input type="text" name="login" required />
+        </label>
+        <label class="field">
+          <span>Пароль *</span>
+          <input type="password" name="password" minlength="4" required />
+        </label>
+        <label class="field">
+          <span>Телефон *</span>
+          <input type="text" name="phone" required />
+        </label>
+        <label class="field">
+          <span>Email *</span>
+          <input type="email" name="email" required />
+        </label>
+      </div>
+      <label class="field">
+        <span>ИНН (необязательно)</span>
+        <input type="text" name="inn" maxlength="12" />
+      </label>
+      <button type="submit" class="btn btn-primary">Создать пользователя</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Настройки приложения и страницы «О себе»</h2>
+    <form method="post" action="/admin/settings" class="form">
+      <div class="form-grid">
+        <label class="field">
+          <span>Название предприятия / ИП *</span>
+          <input type="text" name="agency_name" value="{{ agency.agency_name if agency else '' }}" required />
+        </label>
+        <label class="field">
+          <span>ИНН *</span>
+          <input type="text" name="agency_inn" value="{{ agency.agency_inn if agency else '' }}" required />
+        </label>
+        <label class="field">
+          <span>Телефон *</span>
+          <input type="text" name="agency_phone" value="{{ agency.agency_phone if agency else '' }}" required />
+        </label>
+        <label class="field">
+          <span>Email *</span>
+          <input type="email" name="agency_email" value="{{ agency.agency_email if agency else '' }}" required />
+        </label>
+      </div>
+      <label class="field">
+        <span>Адрес *</span>
+        <input type="text" name="agency_address" value="{{ agency.agency_address if agency else '' }}" required />
+      </label>
+      <label class="field">
+        <span>Заголовок первого экрана (Hero) *</span>
+        <input type="text" name="hero_title" value="{{ agency.hero_title if agency else '' }}" required />
+      </label>
+      <label class="field">
+        <span>Подзаголовок первого экрана *</span>
+        <textarea name="hero_subtitle" rows="2" required>{{ agency.hero_subtitle if agency else '' }}</textarea>
+      </label>
+      <label class="field">
+        <span>Описание предприятия (блок «О себе») *</span>
+        <textarea name="about_text" rows="3" required>{{ agency.about_text if agency else '' }}</textarea>
+      </label>
+
+      <div class="form-grid">
+        <label class="field">
+          <span>Статистика: лет работы</span>
+          <input type="text" name="stat_years" value="{{ agency.stat_years if agency else '12+ лет' }}" required />
+        </label>
+        <label class="field">
+          <span>Статистика: сделок</span>
+          <input type="text" name="stat_deals" value="{{ agency.stat_deals if agency else '640+' }}" required />
+        </label>
+        <label class="field">
+          <span>Статистика: клиентов</span>
+          <input type="text" name="stat_clients" value="{{ agency.stat_clients if agency else '1 100+' }}" required />
+        </label>
+        <label class="field">
+          <span>Статистика: рекомендации</span>
+          <input type="text" name="stat_satisfaction" value="{{ agency.stat_satisfaction if agency else '99%' }}" required />
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Премодерация отзывов клиентов</span>
+        <select name="reviews_require_moderation">
+          <option value="1" {% if agency and agency.reviews_require_moderation %}selected{% endif %}>Включена (отзывы проверяются риэлтором)</option>
+          <option value="0" {% if agency and not agency.reviews_require_moderation %}selected{% endif %}>Выключена (публикуются сразу)</option>
+        </select>
+      </label>
+
+      <button type="submit" class="btn btn-secondary">Сохранить настройки</button>
+    </form>
+  </div>
+</section>
+
+<section class="card section-gap">
+  <h2>Пользователи и роли ({{ users | length }})</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ФИО / Логин</th>
+          <th>Контакты</th>
+          <th>Текущая роль</th>
+          <th>Статус</th>
+          <th>Изменить роль и активность</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td>
+            <strong>{{ u.full_name }}</strong><br />
+            <span class="muted text-xs">Логин: <code>{{ u.login }}</code></span>
+          </td>
+          <td class="tabular">
+            {{ u.phone }}<br />
+            <span class="muted text-xs">{{ u.email }}</span>
+          </td>
+          <td><strong>{{ u.role.name if u.role else "—" }}</strong></td>
+          <td>
+            <span class="status-tag {% if u.is_active %}ok{% else %}warn{% endif %}">
+              {{ "Активен" if u.is_active else "Заблокирован" }}
+            </span>
+          </td>
+          <td>
+            <form method="post" action="/admin/users/{{ u.id_user }}/update" class="actions-row">
+              <select name="role_id" class="select-compact">
+                {% for r in roles %}
+                <option value="{{ r.id_role }}" {% if r.id_role == u.id_role %}selected{% endif %}>{{ r.name }}</option>
+                {% endfor %}
+              </select>
+              <select name="is_active" class="select-compact">
+                <option value="1" {% if u.is_active %}selected{% endif %}>Активен</option>
+                <option value="0" {% if not u.is_active %}selected{% endif %}>Заблокирован</option>
+              </select>
+              <button type="submit" class="btn btn-small">Сохранить</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

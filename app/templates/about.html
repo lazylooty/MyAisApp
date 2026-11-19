@@ -1,0 +1,441 @@
+{% extends "public_base.html" %}
+{% from "_macros.html" import render_header %}
+
+{% block title %}{{ agency.agency_name if agency else "ИП Голубина Ольга Геннадьевна" }} — О себе{% endblock %}
+
+{% block shell_start %}
+<div class="page-shell">
+  <div class="editorial-sheet">
+    <!-- Hero architectural frame (floating header lives inside hero like reference) -->
+    <section class="hero-stage">
+      <svg class="hero-skyline-bg" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="heroSky" x1="0" y1="0" x2="0.8" y2="1">
+            <stop offset="0%" stop-color="#3c6770" />
+            <stop offset="48%" stop-color="#224e58" />
+            <stop offset="100%" stop-color="#0a2e37" />
+          </linearGradient>
+          <linearGradient id="towerLeft" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#70949c" stop-opacity="0.72" />
+            <stop offset="100%" stop-color="#0c343e" stop-opacity="0.92" />
+          </linearGradient>
+          <linearGradient id="towerCenter" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#87aab2" stop-opacity="0.78" />
+            <stop offset="100%" stop-color="#0d3640" stop-opacity="0.96" />
+          </linearGradient>
+          <linearGradient id="towerRight" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5d8088" stop-opacity="0.76" />
+            <stop offset="100%" stop-color="#092931" stop-opacity="0.95" />
+          </linearGradient>
+          <pattern id="curtainGrid" width="24" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 24 0 L 0 0 0 30" fill="none" stroke="#d9ecee" stroke-width="0.75" stroke-opacity="0.22" />
+          </pattern>
+        </defs>
+        <rect width="1200" height="620" fill="url(#heroSky)" />
+        <ellipse cx="620" cy="180" rx="460" ry="210" fill="#a8c7cd" opacity="0.16" />
+
+        <!-- Left glass towers -->
+        <polygon points="35,620 35,145 185,110 185,620" fill="url(#towerLeft)" />
+        <polygon points="35,620 35,145 185,110 185,620" fill="url(#curtainGrid)" />
+        <polygon points="185,620 185,110 250,145 250,620" fill="#133d47" opacity="0.88" />
+        <polygon points="235,620 235,235 390,210 390,620" fill="url(#towerRight)" />
+        <polygon points="235,620 235,235 390,210 390,620" fill="url(#curtainGrid)" />
+
+        <!-- Center highrise towers -->
+        <polygon points="415,620 415,58 595,38 595,620" fill="url(#towerCenter)" />
+        <polygon points="415,620 415,58 595,38 595,620" fill="url(#curtainGrid)" />
+        <polygon points="595,620 595,38 690,78 690,620" fill="#103640" opacity="0.9" />
+        <polygon points="650,620 650,118 815,155 815,620" fill="url(#towerLeft)" />
+        <polygon points="650,620 650,118 815,155 815,620" fill="url(#curtainGrid)" />
+
+        <!-- Signature twisted architectural spire on right -->
+        <path d="M845,620 C855,440 895,250 865,62 L1015,40 C1050,245 1010,435 1030,620 Z" fill="url(#towerCenter)" />
+        <path d="M845,620 C855,440 895,250 865,62 L1015,40 C1050,245 1010,435 1030,620 Z" fill="url(#curtainGrid)" />
+        <polygon points="1030,620 1030,185 1175,215 1175,620" fill="url(#towerRight)" />
+        <rect x="0" y="540" width="1200" height="80" fill="#08242c" opacity="0.55" />
+      </svg>
+
+      {{ render_header(agency, current_user, active_nav, standalone=False) }}
+
+      <div class="hero-centerpiece">
+        <div class="hero-eyebrow">
+          <svg width="22" height="18" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M2 12L12 3l10 9" />
+            <path d="M6 15l6-5.5L18 15" />
+          </svg>
+          <span>Агентство недвижимости • Екатеринбург</span>
+        </div>
+
+        <div class="hero-watermark" aria-hidden="true">ГОЛУБИНА</div>
+
+        <div class="hero-glass-card">
+          <div class="hero-glass-thumb">
+            <svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="pedimentSky" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#879da3" />
+                  <stop offset="100%" stop-color="#2c444b" />
+                </linearGradient>
+              </defs>
+              <rect width="360" height="200" fill="url(#pedimentSky)" />
+              <rect x="14" y="42" width="108" height="158" fill="#465c63" />
+              <rect x="238" y="42" width="108" height="158" fill="#3a4e55" />
+              <g fill="#1c2c31" opacity="0.72">
+                <rect x="28" y="64" width="22" height="46" />
+                <rect x="64" y="64" width="22" height="46" />
+                <rect x="28" y="128" width="22" height="52" />
+                <rect x="64" y="128" width="22" height="52" />
+                <rect x="254" y="64" width="22" height="46" />
+                <rect x="290" y="64" width="22" height="46" />
+                <rect x="254" y="128" width="22" height="52" />
+                <rect x="290" y="128" width="22" height="52" />
+              </g>
+              <polygon points="105,112 180,38 255,112" fill="#e5ecee" />
+              <polygon points="122,112 180,56 238,112" fill="#465960" />
+              <rect x="115" y="112" width="130" height="88" fill="#cbd6d9" />
+              <rect x="132" y="124" width="14" height="76" fill="#eef3f5" />
+              <rect x="157" y="124" width="14" height="76" fill="#eef3f5" />
+              <rect x="189" y="124" width="14" height="76" fill="#eef3f5" />
+              <rect x="214" y="124" width="14" height="76" fill="#eef3f5" />
+            </svg>
+          </div>
+          <div class="hero-glass-title">Персональный подбор объектов</div>
+          <label for="inquiry-toggle" class="hero-glass-cta">
+            <span><span class="cta-dot"></span>Записаться</span>
+            <span aria-hidden="true">↗</span>
+          </label>
+        </div>
+
+        <div class="hero-headline-strip">
+          <h1>{{ agency.hero_title if agency else "Недвижимость с безупречной юридической чистотой" }}</h1>
+          <p>{{ agency.hero_subtitle if agency else "Персональное сопровождение сделок купли-продажи и аренды в Екатеринбурге." }}</p>
+        </div>
+      </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+<!-- Блок 2: О компании + 2x2 KPI Bento + №1 карточка каталога -->
+<section class="editorial-section">
+  <div class="container">
+    <div class="bento-about-grid">
+      <div>
+        <p class="about-lead-copy">
+          {{ agency.about_text if agency else "ИП Голубина Ольга Геннадьевна — персональное сопровождение сделок с недвижимостью с проверкой ЕГРН и безопасными эскроу-расчетами." }}
+        </p>
+
+        <div class="kpi-grid-2x2">
+          <article class="kpi-tile">
+            <div class="kpi-num">{{ agency.stat_clients if agency else "1 100+" }}</div>
+            <div class="kpi-desc">Довольных клиентов, нашедших свой дом</div>
+          </article>
+          <article class="kpi-tile kpi-tile--featured">
+            <div class="kpi-num">{{ agency.stat_deals if agency else "640+" }}</div>
+            <div class="kpi-desc">Успешных сделок в жилом и коммерческом сегменте</div>
+          </article>
+          <article class="kpi-tile">
+            <div class="kpi-num">{{ agency.stat_years if agency else "12+ лет" }}</div>
+            <div class="kpi-desc">Экспертного опыта на рынке недвижимости</div>
+          </article>
+          <article class="kpi-tile">
+            <div class="kpi-num">{{ agency.stat_satisfaction if agency else "99%" }}</div>
+            <div class="kpi-desc">Обращений по личным рекомендациям</div>
+          </article>
+        </div>
+      </div>
+
+      <div class="about-right-col">
+        <h2 class="display-statement">
+          Мы №1 в персональном
+          <span class="display-statement-indent">сопровождении сделок</span>
+        </h2>
+
+        <div class="feature-split-card">
+          <div class="feature-split-copy">
+            <p>
+              Проверенные квартиры, апартаменты, загородные дома и коммерческие объекты. Каждый объект проходит полную правовую экспертизу ЕГРН, а расчеты защищены банковским эскроу и готовым пакетом договоров.
+            </p>
+            <a href="/catalog" class="circle-catalog-btn">
+              <span class="circle-catalog-badge" aria-hidden="true">↗</span>
+              <span>Посмотреть<br />каталог</span>
+            </a>
+          </div>
+          <div class="feature-split-photo">
+            <svg viewBox="0 0 320 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-label="Современная архитектура">
+              <defs>
+                <linearGradient id="villaSky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#c3ced1" />
+                  <stop offset="100%" stop-color="#69797e" />
+                </linearGradient>
+              </defs>
+              <rect width="320" height="300" fill="url(#villaSky)" />
+              <circle cx="48" cy="175" r="56" fill="#2c3e35" opacity="0.45" />
+              <circle cx="285" cy="160" r="68" fill="#24352d" opacity="0.52" />
+              <rect x="46" y="48" width="228" height="224" rx="4" fill="#1e272a" />
+              <rect x="56" y="58" width="128" height="96" fill="#9fb2b8" />
+              <rect x="64" y="66" width="112" height="80" fill="#2b3d43" />
+              <rect x="74" y="76" width="92" height="60" fill="#dfccab" opacity="0.32" />
+              <rect x="196" y="58" width="66" height="96" fill="#324349" />
+              <rect x="206" y="72" width="46" height="66" fill="#e5d4b6" opacity="0.28" />
+              <rect x="56" y="168" width="110" height="96" fill="#2f4045" />
+              <rect x="180" y="168" width="82" height="96" fill="#8ea1a7" />
+              <rect x="190" y="178" width="62" height="80" fill="#172326" />
+              <rect x="0" y="266" width="320" height="34" fill="#111a1d" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Блок 3: Асимметричная мозаика форматов недвижимости (как на референсе) -->
+<section class="showcase-section">
+  <div class="container">
+    <div class="masonry-showcase">
+      <!-- Колонка 1 -->
+      <div class="masonry-col masonry-col--offset">
+        <div class="glass-spacer-tile glass-spacer-tile--right" aria-hidden="true"></div>
+        <a href="/catalog" class="category-card">
+          <svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="300" height="220" fill="#334c54" />
+            <rect x="28" y="55" width="244" height="120" fill="#162930" />
+            <rect x="44" y="68" width="140" height="64" fill="#d9c6a3" opacity="0.55" />
+            <rect x="196" y="68" width="60" height="64" fill="#89a5ad" opacity="0.45" />
+            <rect x="0" y="170" width="300" height="50" fill="#10252a" />
+          </svg>
+          <span class="category-arrow" aria-hidden="true">↗</span>
+          <span class="category-label">Пентхаусы</span>
+        </a>
+        <a href="/catalog" class="category-card category-card--tall">
+          <svg viewBox="0 0 300 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="300" height="280" fill="#637b80" />
+            <polygon points="40,165 150,50 260,165" fill="#1b2d33" />
+            <polygon points="56,165 150,68 244,165" fill="#dde5e7" />
+            <rect x="74" y="152" width="152" height="96" fill="#f0f4f5" />
+            <rect x="92" y="168" width="52" height="58" fill="#d5bc92" opacity="0.7" />
+            <rect x="160" y="168" width="52" height="58" fill="#23373d" />
+            <rect x="0" y="242" width="300" height="38" fill="#10252b" />
+          </svg>
+          <span class="category-arrow" aria-hidden="true">↗</span>
+          <span class="category-label">Загородные дома</span>
+        </a>
+      </div>
+
+      <!-- Колонка 2 -->
+      <div class="masonry-col">
+        <a href="/catalog" class="category-card category-card--tall">
+          <svg viewBox="0 0 300 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="300" height="280" fill="#182a31" />
+            <rect x="24" y="18" width="110" height="190" fill="#2e4d57" />
+            <rect x="148" y="18" width="128" height="190" fill="#3a606c" />
+            <line x1="24" y1="90" x2="276" y2="90" stroke="#0d1c21" stroke-width="5" />
+            <line x1="24" y1="155" x2="276" y2="155" stroke="#0d1c21" stroke-width="5" />
+            <rect x="52" y="210" width="196" height="44" rx="6" fill="#b79c73" opacity="0.5" />
+          </svg>
+          <span class="category-arrow" aria-hidden="true">↗</span>
+          <span class="category-label">Элитные квартиры</span>
+        </a>
+        <a href="/catalog" class="category-card category-card--tall">
+          <svg viewBox="0 0 300 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="300" height="280" fill="#89a3aa" />
+            <rect x="30" y="50" width="102" height="170" fill="#3a3330" />
+            <rect x="148" y="34" width="124" height="186" fill="#2f2a28" />
+            <rect x="0" y="216" width="300" height="64" fill="#1c3c45" />
+          </svg>
+          <span class="category-arrow" aria-hidden="true">↗</span>
+          <span class="category-label">Клубные дома</span>
+        </a>
+        <div class="glass-spacer-tile glass-spacer-tile--center" aria-hidden="true"></div>
+      </div>
+
+      <!-- Колонка 3 -->
+      <div class="masonry-col masonry-col--offset">
+        <a href="/catalog" class="category-card">
+          <svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="300" height="220" fill="#70878d" />
+            <rect x="20" y="42" width="80" height="150" fill="#212d31" />
+            <rect x="110" y="42" width="80" height="150" fill="#2a383c" />
+            <rect x="200" y="42" width="80" height="150" fill="#1b2629" />
+            <rect x="34" y="64" width="52" height="40" fill="#b6c6ca" opacity="0.45" />
+            <rect x="124" y="64" width="52" height="40" fill="#b6c6ca" opacity="0.45" />
+            <rect x="214" y="64" width="52" height="40" fill="#b6c6ca" opacity="0.45" />
+          </svg>
+          <span class="category-arrow" aria-hidden="true">↗</span>
+          <span class="category-label">Таунхаусы</span>
+        </a>
+        <a href="/catalog" class="category-card category-card--tall">
+          <svg viewBox="0 0 300 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="300" height="280" fill="#5e8792" />
+            <rect x="26" y="44" width="68" height="190" fill="#1b2d34" />
+            <rect x="116" y="34" width="68" height="200" fill="#223740" />
+            <rect x="206" y="44" width="68" height="190" fill="#16262c" />
+            <rect x="0" y="226" width="300" height="54" fill="#0d2b33" />
+          </svg>
+          <span class="category-arrow" aria-hidden="true">↗</span>
+          <span class="category-label">ЖК Премиум класса</span>
+        </a>
+        <a href="/catalog" class="category-card">
+          <svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="300" height="220" fill="#46575c" />
+            <rect x="18" y="30" width="90" height="130" fill="#273236" />
+            <rect x="190" y="45" width="90" height="115" fill="#1f2a2e" />
+            <rect x="24" y="148" width="252" height="52" fill="#9c896c" opacity="0.42" />
+          </svg>
+          <span class="category-arrow" aria-hidden="true">↗</span>
+          <span class="category-label">Квартиры с террасами</span>
+        </a>
+      </div>
+
+      <!-- Колонка 4 -->
+      <div class="masonry-col">
+        <div class="glass-spacer-tile" aria-hidden="true"></div>
+        <a href="/catalog" class="category-card category-card--tall">
+          <svg viewBox="0 0 300 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="300" height="280" fill="#2b4f5a" />
+            <rect x="26" y="20" width="120" height="230" fill="#183038" />
+            <polygon points="146,195 256,88 276,88 166,195" fill="#7c98a0" opacity="0.55" />
+            <rect x="172" y="185" width="96" height="55" fill="#d9be92" opacity="0.4" />
+          </svg>
+          <span class="category-arrow" aria-hidden="true">↗</span>
+          <span class="category-label">Апартаменты</span>
+        </a>
+        <a href="/catalog" class="category-card category-card--tall">
+          <svg viewBox="0 0 300 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="300" height="280" fill="#4f6468" />
+            <rect x="34" y="64" width="232" height="145" fill="#2b2722" />
+            <rect x="52" y="80" width="126" height="114" fill="#d9bc8c" opacity="0.5" />
+            <rect x="190" y="80" width="60" height="114" fill="#758f95" opacity="0.48" />
+            <rect x="0" y="210" width="300" height="70" fill="#132e35" />
+          </svg>
+          <span class="category-arrow" aria-hidden="true">↗</span>
+          <span class="category-label">Инвестиционные объекты</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Блок 4: Актуальные объекты из базы -->
+{% if featured_properties %}
+<section class="section-band section-band--soft">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Предложения</span>
+        <h2>Актуальные объекты недвижимости</h2>
+      </div>
+      <a href="/catalog" class="btn btn-outline btn-sm">Все объекты ↗</a>
+    </div>
+    <div class="cards-grid">
+      {% for prop in featured_properties %}
+      <article class="property-card">
+        <div>
+          <div class="property-meta-row">
+            <span>{{ prop.district.name }} • {{ prop.category.name }}</span>
+            {% if prop.status %}
+            <span class="status-tag {% if prop.status.name == 'Доступен' %}ok{% elif prop.status.name == 'Забронирован' %}warn{% endif %}">{{ prop.status.name }}</span>
+            {% endif %}
+          </div>
+          <h3 class="property-title">{{ prop.address }}</h3>
+          <div class="property-specs">
+            <span>{{ prop.total_area }} м²</span>
+            <span>{{ prop.rooms_count }} комн.</span>
+            <span>{{ prop.floor }} этаж</span>
+          </div>
+        </div>
+        <div class="property-footer">
+          <div>
+            <div class="property-price">{{ prop.price | money }}</div>
+            <div class="property-sqm">{{ sqm_price(prop.price, prop.total_area) }}</div>
+          </div>
+          <label for="inquiry-toggle" class="btn btn-primary btn-sm">Записаться</label>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Блок 5: Визитные карточки специалистов -->
+<section class="section-band">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Команда и визитки</span>
+        <h2>Ваши специалисты</h2>
+      </div>
+      <label for="inquiry-toggle" class="btn btn-outline btn-sm">Задать вопрос специалисту</label>
+    </div>
+
+    <div class="cards-grid">
+      {% for card in employees %}
+      <article class="team-card">
+        <div class="team-top">
+          {% if card.photo_path %}
+          <img src="{{ card.photo_path }}" alt="{{ card.user.full_name }}" class="team-avatar" />
+          {% else %}
+          <div class="team-avatar">{{ card.user.full_name[:2] | upper }}</div>
+          {% endif %}
+          <div>
+            <strong>{{ card.user.full_name }}</strong>
+            <div class="muted text-sm">{{ card.position.name }}</div>
+            <div class="team-meta">
+              <span class="tabular">Стаж: {{ card.experience_years }} лет</span>
+              <span class="rating-pill">★ {{ card.rating }}</span>
+            </div>
+          </div>
+        </div>
+        <p class="team-bio">{{ card.description or "" }}</p>
+        <div class="team-meta tabular">
+          <span>{{ card.user.phone }}</span>
+          <span>{{ card.user.email }}</span>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Блок 6: Отзывы клиентов прямо перед футером (требование заказчика) -->
+<section class="section-band section-band--soft">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Репутация</span>
+        <h2>Отзывы клиентов</h2>
+        <p class="section-lead">Реальные впечатления покупателей, продавцов и арендаторов о работе с {{ agency.agency_name if agency else "ИП Голубина Ольга Геннадьевна" }}.</p>
+      </div>
+      <a href="/reviews" class="btn btn-outline btn-sm">Все отзывы и оставить свой ↗</a>
+    </div>
+
+    {% if reviews %}
+    <div class="cards-grid">
+      {% for rev in reviews %}
+      <article class="review-card">
+        <div>
+          <div class="stars" aria-label="Оценка {{ rev.rating }} из 5">{% for _ in range(rev.rating) %}★{% endfor %}</div>
+          <p class="review-quote">«{{ rev.review_text }}»</p>
+        </div>
+        <div>
+          <div class="review-author">{{ rev.author.full_name }}</div>
+          <div class="review-target">
+            {% if rev.target %}Специалист: {{ rev.target.full_name }} • {% endif %}
+            {{ rev.created_date | dt("%d.%m.%Y") }}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="muted">Отзывы появятся здесь после публикации.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block shell_end %}
+  </div>
+</div>
+{% endblock %}

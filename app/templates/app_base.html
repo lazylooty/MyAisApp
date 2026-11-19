@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Рабочая панель{% endblock %} — {{ agency.agency_name if agency else "ИП Голубина О.Г." }}</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" />
+      <aside class="sidebar">
+        <div>
+          <div class="brand">
+            <div class="brand-badge">ГО</div>
+            <div>
+              <div class="brand-title">ИП Голубина О.Г.</div>
+              <div class="brand-sub">АИС Недвижимость</div>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <div class="nav-section">Основное</div>
+            <a href="/" class="nav-link">О себе (витрина)</a>
+            <a href="/properties" class="nav-link {% if active_nav == 'properties' %}active{% endif %}">
+              Объекты недвижимости
+            </a>
+            <a href="/reviews" class="nav-link {% if active_nav == 'reviews' %}active{% endif %}">
+              Отзывы
+            </a>
+
+            <div class="nav-section">Работа и сделки</div>
+            <a href="/inquiries" class="nav-link {% if active_nav == 'inquiries' %}active{% endif %}">
+              Обращения
+            </a>
+            {% if is_staff %}
+            <a href="/clients" class="nav-link {% if active_nav == 'clients' %}active{% endif %}">
+              Клиенты
+            </a>
+            {% endif %}
+            <a href="/showings" class="nav-link {% if active_nav == 'showings' %}active{% endif %}">
+              График показов
+            </a>
+            <a href="/deals" class="nav-link {% if active_nav == 'deals' %}active{% endif %}">
+              Сделки
+            </a>
+            <a href="/contracts" class="nav-link {% if active_nav == 'contracts' %}active{% endif %}">
+              Договоры
+            </a>
+
+            <div class="nav-section">Система</div>
+            {% if is_senior %}
+            <a href="/team" class="nav-link {% if active_nav == 'team' %}active{% endif %}">
+              Визитки сотрудников
+            </a>
+            {% endif %}
+            <a href="/profile" class="nav-link {% if active_nav == 'profile' %}active{% endif %}">
+              <span>Профиль и уведомления</span>
+              {% if unread_count > 0 %}
+              <span class="badge-count">{{ unread_count }}</span>
+              {% endif %}
+            </a>
+            {% if is_admin %}
+            <a href="/admin" class="nav-link {% if active_nav == 'admin' %}active{% endif %}">
+              Администрирование
+            </a>
+            {% endif %}
+          </nav>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="user-pill">{{ current_user.full_name }}</div>
+          <div>Роль: {{ role_name }}</div>
+          <a href="/logout" class="btn btn-small">Выйти из аккаунта</a>
+        </div>
+      </aside>
+
+      <div class="main-wrap">
+        <div class="topbar">
+          <div class="topbar-left">
+            <label for="sidebar-toggle" class="sidebar-burger">☰ Меню</label>
+            <span class="topbar-agency">
+              {{ agency.agency_name if agency else "ИП Голубина Ольга Геннадьевна" }}
+            </span>
+          </div>
+          <div class="actions-row">
+            <span class="topbar-role">{{ role_name }}</span>
+            <a href="/profile" class="btn btn-small tabular">
+              Уведомления ({{ unread_count }})
+            </a>
+          </div>
+        </div>
+
+        <main class="main">
+          {% if message %}
+          <div class="alert alert-success">{{ message }}</div>
+          {% endif %}
+          {% if error %}
+          <div class="alert alert-error">{{ error }}</div>
+          {% endif %}
+
+          {% block content %}{% endblock %}
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

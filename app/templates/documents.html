@@ -1,0 +1,238 @@
+{% extends "app_base.html" %}
+
+{% block title %}Договоры и шаблоны{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Договоры и шаблоны (.docx)</h1>
+  <p class="muted">
+    {% if is_staff %}
+    Загрузите шаблон <code>.docx</code> с метками вида <code>&#123;&#123; FIO.USER_1 &#125;&#125;</code>, выберите сделку или клиентов и объект недвижимости для автоматического формирования договора.
+    {% else %}
+    Просмотр и скачивание сформированных договоров по вашим сделкам.
+    {% endif %}
+  </p>
+</header>
+
+{% if generated_contract %}
+<div class="alert alert-success alert-download">
+  <span>Готов файл договора <strong>№{{ generated_contract.contract_number }}</strong> ({{ generated_contract.client_names }}).</span>
+  <a href="/contracts/{{ generated_contract.id_contract }}/download" class="btn btn-primary btn-small">Скачать .docx</a>
+</div>
+{% endif %}
+
+{% if is_staff %}
+<section class="grid-two">
+  <div class="card">
+    <h2>Создать документ</h2>
+    <form method="post" action="/contracts/generate" class="form">
+      <label class="field">
+        <span>Шаблон документа *</span>
+        <select name="template_id" required>
+          {% for tpl in contract_templates %}
+          <option value="{{ tpl.id_template }}">{{ tpl.template_name }}</option>
+          {% else %}
+          <option value="" disabled selected>Нет загруженных шаблонов</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label class="field">
+        <span>По готовой сделке (необязательно — подставит участников и объект автоматически)</span>
+        <select name="deal_id">
+          <option value="0">— Выбрать клиентов и объект вручную ниже —</option>
+          {% for d in deals %}
+          <option value="{{ d.id_deal }}">
+            Сделка №{{ d.id_deal }} ({{ d.deal_type.name }}) — {{ d.property_obj.address }}
+          </option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Клиент 1 (USER_1)</span>
+        <select name="client_ids">
+          <option value="0">— Не выбран —</option>
+          {% for c in clients %}
+          <option value="{{ c.id_client }}">
+            {{ c.user.full_name }} (ИНН: {{ c.user.inn or "нет" }})
+          </option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Клиент 2 (USER_2, необязательно)</span>
+        <select name="client_ids">
+          <option value="0">— Не выбран —</option>
+          {% for c in clients %}
+          <option value="{{ c.id_client }}">
+            {{ c.user.full_name }} (ИНН: {{ c.user.inn or "нет" }})
+          </option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Объект недвижимости</span>
+        <select name="property_id">
+          <option value="0">— Не выбран —</option>
+          {% for p in properties %}
+          <option value="{{ p.id_property }}">
+            {{ p.address }} — {{ p.price | money }} ({{ p.total_area }} м²)
+          </option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Номер договора (если пусто — создастся автоматически)</span>
+        <input type="text" name="contract_number" placeholder="Например: ДГ-2026-01" />
+      </label>
+
+      <button type="submit" class="btn btn-primary" {% if not contract_templates %}disabled{% endif %}>
+        Создать документ (.docx)
+      </button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Загрузить шаблон (.docx)</h2>
+    <form method="post" action="/templates/upload" enctype="multipart/form-data" class="form">
+      <label class="field">
+        <span>Название шаблона</span>
+        <input type="text" name="template_name" placeholder="Договор купли-продажи квартиры" />
+      </label>
+
+      <label class="field">
+        <span>Файл Word (.docx)</span>
+        <input type="file" name="file" accept=".docx" required />
+      </label>
+
+      <div class="actions-row">
+        <button type="submit" class="btn btn-secondary">Загрузить шаблон</button>
+        <a href="/templates/sample" class="btn btn-link">Скачать пример шаблона</a>
+      </div>
+    </form>
+
+    <details class="tags-help">
+      <summary>Справочник поддерживаемых тегов в .docx</summary>
+      <div class="tags-help-body">
+        <p><strong>Клиенты (1, 2, ...):</strong> можно писать <code>USER_1</code>, <code>USER(_1)</code> или <code>USER(1)</code></p>
+        <ul>
+          <li><code>&#123;&#123; FIO.USER_1 &#125;&#125;</code>, <code>&#123;&#123; INN.USER_1 &#125;&#125;</code>, <code>&#123;&#123; PHONE.USER_1 &#125;&#125;</code>, <code>&#123;&#123; EMAIL.USER_1 &#125;&#125;</code></li>
+          <li><code>&#123;&#123; PASSPORT.USER_1 &#125;&#125;</code> — полные паспортные данные</li>
+          <li><code>&#123;&#123; FIO.USER_2 &#125;&#125;</code>, <code>&#123;&#123; INN.USER_2 &#125;&#125;</code>, <code>&#123;&#123; PASSPORT.USER_2 &#125;&#125;</code></li>
+        </ul>
+        <p><strong>Объект, сделка и агентство:</strong></p>
+        <ul>
+          <li><code>&#123;&#123; PROPERTY.ADDRESS &#125;&#125;</code>, <code>&#123;&#123; PROPERTY.CADASTRAL &#125;&#125;</code>, <code>&#123;&#123; PROPERTY.AREA &#125;&#125;</code>, <code>&#123;&#123; PROPERTY.PRICE &#125;&#125;</code></li>
+          <li><code>&#123;&#123; DEAL.PRICE &#125;&#125;</code>, <code>&#123;&#123; DEAL.COMMISSION &#125;&#125;</code>, <code>&#123;&#123; DEAL.ESCROW &#125;&#125;</code></li>
+          <li><code>&#123;&#123; AGENCY.NAME &#125;&#125;</code>, <code>&#123;&#123; CONTRACT.NUMBER &#125;&#125;</code>, <code>&#123;&#123; CONTRACT.DATE &#125;&#125;</code></li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="card section-gap">
+  <h2>Доступные шаблоны ({{ contract_templates | length }})</h2>
+  {% if contract_templates %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Распознанные теги в файле</th>
+          <th>Дата загрузки</th>
+          {% if is_senior %}
+          <th>Действие</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for tpl in contract_templates %}
+        <tr>
+          <td><strong>{{ tpl.template_name }}</strong></td>
+          <td>
+            {% if tpl.tags_list %}
+            <div class="tag-chips">
+              {% for tag in tpl.tags_list %}
+              <code class="tag-chip">&#123;&#123; {{ tag }} &#125;&#125;</code>
+              {% endfor %}
+            </div>
+            {% else %}
+            <span class="muted">Теги не найдены</span>
+            {% endif %}
+          </td>
+          <td class="tabular">{{ tpl.created_date | dt }}</td>
+          {% if is_senior %}
+          <td>
+            <form method="post" action="/templates/{{ tpl.id_template }}/delete">
+              <button type="submit" class="btn btn-danger-outline">Удалить</button>
+            </form>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">Шаблоны пока не загружены.</p>
+  {% endif %}
+</section>
+{% endif %}
+
+<section class="card section-gap">
+  <h2>Сформированные документы</h2>
+  {% if contracts %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>№ договора</th>
+          <th>Шаблон</th>
+          <th>Клиенты</th>
+          <th>Объект</th>
+          <th>Статус</th>
+          <th>Файл</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in contracts %}
+        <tr>
+          <td class="tabular">
+            <strong>{{ item.contract_number }}</strong><br />
+            <span class="muted text-xs">{{ item.generation_date | dt }}</span>
+          </td>
+          <td>{{ item.template.template_name if item.template else "—" }}</td>
+          <td>{{ item.client_names }}</td>
+          <td>{{ item.property_obj.address if item.property_obj else "—" }}</td>
+          <td>
+            <span class="status-tag {% if item.is_signed %}ok{% else %}warn{% endif %}">
+              {{ "Подписан" if item.is_signed else "Не подписан" }}
+            </span>
+          </td>
+          <td>
+            <div class="actions-row">
+              <a href="/contracts/{{ item.id_contract }}/download" class="btn btn-small">Скачать .docx</a>
+              {% if is_staff %}
+              <form method="post" action="/contracts/{{ item.id_contract }}/sign">
+                <button type="submit" class="btn btn-small">
+                  {{ "Снять подпись" if item.is_signed else "Подписан" }}
+                </button>
+              </form>
+              {% endif %}
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">Сформированных договоров пока нет.</p>
+  {% endif %}
+</section>
+{% endblock %}

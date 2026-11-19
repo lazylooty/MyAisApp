@@ -1,0 +1,1371 @@
+[+] up 4/4
+ ✔ Image ais_for_og-web       Built                                                                                42.7s
+ ✔ Network ais_for_og_default Created                                                                               0.1s
+ ✔ Container realtor_postgres Created                                                                               0.2s
+ ✔ Container realtor_fastapi  Created                                                                               0.1s
+Attaching to realtor_fastapi, realtor_postgres
+Container realtor_postgres Waiting
+realtor_postgres  |
+realtor_postgres  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+realtor_postgres  |
+realtor_postgres  | 2026-11-17 16:05:17.508 UTC [1] LOG:  starting PostgreSQL 16.16 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+realtor_postgres  | 2026-11-17 16:05:17.508 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+realtor_postgres  | 2026-11-17 16:05:17.508 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+realtor_postgres  | 2026-11-17 16:05:17.515 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+realtor_postgres  | 2026-11-17 16:05:17.524 UTC [30] LOG:  database system was shut down at 2026-11-17 15:54:49 UTC
+realtor_postgres  | 2026-11-17 16:05:17.535 UTC [1] LOG:  database system is ready to accept connections
+Container realtor_postgres Healthy
+realtor_fastapi   | INFO:     Started server process [1]
+realtor_fastapi   | INFO:     Waiting for application startup.
+realtor_postgres  | 2026-11-17 16:05:25.732 UTC [41] ERROR:  column app_settings.hero_title does not exist at character 132
+realtor_postgres  | 2026-11-17 16:05:25.732 UTC [41] STATEMENT:  SELECT count(*) AS count_1
+realtor_postgres  |     FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+
+
+realtor_fastapi   | ERROR:    Traceback (most recent call last):
+realtor_postgres  |     FROM app_settings) AS anon_1
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+
+
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | psycopg2.errors.UndefinedColumn: column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   |
+realtor_fastapi   | The above exception was the direct cause of the following exception:
+realtor_fastapi   |
+realtor_fastapi   | Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 693, in lifespan
+realtor_fastapi   |     async with self.lifespan_context(app) as maybe_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/app/app/main.py", line 29, in lifespan
+realtor_fastapi   |     seed_initial_data(db)
+realtor_fastapi   |   File "/app/app/seed.py", line 123, in seed_initial_data
+realtor_fastapi   |     if db.query(AppSettings).count() == 0:
+realtor_fastapi   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3142, in count
+realtor_fastapi   |     self._legacy_from_self(col).enable_eagerloads(False).scalar()
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2831, in scalar
+realtor_fastapi   |     ret = self.one()
+realtor_fastapi   |           ^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2804, in one
+realtor_fastapi   |     return self._iter().one()  # type: ignore
+realtor_fastapi   |            ^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+realtor_fastapi   |     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+realtor_fastapi   |                                                   ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+realtor_fastapi   |     return self._execute_internal(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+realtor_fastapi   |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+realtor_fastapi   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+realtor_fastapi   |     result = conn.execute(
+realtor_fastapi   |              ^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+realtor_fastapi   |     return meth(
+realtor_fastapi   |            ^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+realtor_fastapi   |     return connection._execute_clauseelement(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+realtor_fastapi   |     ret = self._execute_context(
+realtor_fastapi   |           ^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+realtor_fastapi   |     return self._exec_single_context(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+realtor_fastapi   |     self._handle_dbapi_exception(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+realtor_fastapi   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   | [SQL: SELECT count(*) AS count_1
+realtor_fastapi   | FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | FROM app_settings) AS anon_1]
+realtor_fastapi exited with code 3 (restarting)
+realtor_fastapi   | (Background on this error at: https://sqlalche.me/e/20/f405)
+realtor_fastapi   |
+realtor_fastapi   | ERROR:    Application startup failed. Exiting.
+realtor_fastapi   | INFO:     Started server process [1]
+realtor_fastapi   | INFO:     Waiting for application startup.
+realtor_postgres  | 2026-11-17 16:05:28.670 UTC [49] ERROR:  column app_settings.hero_title does not exist at character 132
+realtor_postgres  | 2026-11-17 16:05:28.670 UTC [49] STATEMENT:  SELECT count(*) AS count_1
+realtor_postgres  |     FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | ERROR:    Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | psycopg2.errors.UndefinedColumn: column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   |
+realtor_fastapi   | The above exception was the direct cause of the following exception:
+realtor_fastapi   |
+realtor_fastapi   | Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 693, in lifespan
+realtor_fastapi   |     async with self.lifespan_context(app) as maybe_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_postgres  |     FROM app_settings) AS anon_1
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/app/app/main.py", line 29, in lifespan
+realtor_fastapi   |     seed_initial_data(db)
+realtor_fastapi   |   File "/app/app/seed.py", line 123, in seed_initial_data
+realtor_fastapi   |     if db.query(AppSettings).count() == 0:
+realtor_fastapi   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3142, in count
+realtor_fastapi   |     self._legacy_from_self(col).enable_eagerloads(False).scalar()
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2831, in scalar
+realtor_fastapi   |     ret = self.one()
+realtor_fastapi   |           ^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2804, in one
+realtor_fastapi   |     return self._iter().one()  # type: ignore
+realtor_fastapi   |            ^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+realtor_fastapi   |     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+realtor_fastapi   |                                                   ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+realtor_fastapi   |     return self._execute_internal(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+realtor_fastapi   |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+realtor_fastapi   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+realtor_fastapi   |     result = conn.execute(
+realtor_fastapi   |              ^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+realtor_fastapi   |     return meth(
+realtor_fastapi   |            ^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+realtor_fastapi   |     return connection._execute_clauseelement(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+realtor_fastapi   |     ret = self._execute_context(
+realtor_fastapi   |           ^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+realtor_fastapi   |     return self._exec_single_context(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+realtor_fastapi   |     self._handle_dbapi_exception(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+realtor_fastapi   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   | [SQL: SELECT count(*) AS count_1
+realtor_fastapi   | FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | FROM app_settings) AS anon_1]
+realtor_fastapi   | (Background on this error at: https://sqlalche.me/e/20/f405)
+realtor_fastapi   |
+realtor_fastapi   | ERROR:    Application startup failed. Exiting.
+realtor_fastapi exited with code 3 (restarting)
+realtor_fastapi   | INFO:     Started server process [1]
+realtor_fastapi   | INFO:     Waiting for application startup.
+realtor_postgres  | 2026-11-17 16:05:31.612 UTC [50] ERROR:  column app_settings.hero_title does not exist at character 132
+realtor_postgres  | 2026-11-17 16:05:31.612 UTC [50] STATEMENT:  SELECT count(*) AS count_1
+realtor_postgres  |     FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | ERROR:    Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | psycopg2.errors.UndefinedColumn: column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   |
+realtor_fastapi   | The above exception was the direct cause of the following exception:
+realtor_fastapi   |
+realtor_fastapi   | Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 693, in lifespan
+realtor_fastapi   |     async with self.lifespan_context(app) as maybe_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^Watch   d Detach
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_postgres  |     FROM app_settings) AS anon_1
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/app/app/main.py", line 29, in lifespan
+realtor_fastapi   |     seed_initial_data(db)
+realtor_fastapi   |   File "/app/app/seed.py", line 123, in seed_initial_data
+realtor_fastapi   |     if db.query(AppSettings).count() == 0:
+realtor_fastapi   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3142, in count
+realtor_fastapi   |     self._legacy_from_self(col).enable_eagerloads(False).scalar()
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2831, in scalar
+realtor_fastapi   |     ret = self.one()
+realtor_fastapi   |           ^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2804, in one
+realtor_fastapi   |     return self._iter().one()  # type: ignore
+realtor_fastapi   |            ^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+realtor_fastapi   |     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+realtor_fastapi   |                                                   ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+realtor_fastapi   |     return self._execute_internal(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+realtor_fastapi   |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+realtor_fastapi   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+realtor_fastapi   |     result = conn.execute(
+realtor_fastapi   |              ^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+realtor_fastapi   |     return meth(
+realtor_fastapi   |            ^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+realtor_fastapi   |     return connection._execute_clauseelement(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+realtor_fastapi   |     ret = self._execute_context(
+realtor_fastapi   |           ^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+realtor_fastapi   |     return self._exec_single_context(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+realtor_fastapi   |     self._handle_dbapi_exception(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+realtor_fastapi   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   | [SQL: SELECT count(*) AS count_1
+realtor_fastapi   | FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | FROM app_settings) AS anon_1]
+realtor_fastapi   | (Background on this error at: https://sqlalche.me/e/20/f405)
+realtor_fastapi   |
+realtor_fastapi   | ERROR:    Application startup failed. Exiting.
+realtor_fastapi exited with code 3 (restarting)
+realtor_fastapi   | INFO:     Started server process [1]
+realtor_fastapi   | INFO:     Waiting for application startup.
+realtor_postgres  | 2026-11-17 16:05:34.657 UTC [58] ERROR:  column app_settings.hero_title does not exist at character 132
+realtor_postgres  | 2026-11-17 16:05:34.657 UTC [58] STATEMENT:  SELECT count(*) AS count_1
+realtor_postgres  |     FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | ERROR:    Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | psycopg2.errors.UndefinedColumn: column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   |
+realtor_fastapi   | The above exception was the direct cause of the following exception:
+realtor_fastapi   |
+realtor_fastapi   | Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 693, in lifespan
+realtor_fastapi   |     async with self.lifespan_context(app) as maybe_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/app/app/main.py", line 29, in lifespan
+realtor_fastapi   |     seed_initial_data(db)
+realtor_fastapi   |   File "/app/app/seed.py", line 123, in seed_initial_data
+realtor_fastapi   |     if db.query(AppSettings).count() == 0:
+realtor_fastapi   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3142, in count
+realtor_fastapi   |     self._legacy_from_self(col).enable_eagerloads(False).scalar()
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2831, in scalar
+realtor_fastapi   |     ret = self.one()
+realtor_fastapi   |           ^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2804, in one
+realtor_fastapi   |     return self._iter().one()  # type: ignore
+realtor_fastapi   |            ^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+realtor_fastapi   |     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+realtor_fastapi   |                                                   ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+realtor_fastapi   |     return self._execute_internal(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^tch   d Detach
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+realtor_fastapi   |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+realtor_fastapi   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+realtor_fastapi   |     result = conn.execute(
+realtor_fastapi   |              ^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+realtor_fastapi   |     return meth(
+realtor_fastapi   |            ^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+realtor_fastapi   |     return connection._execute_clauseelement(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+realtor_fastapi   |     ret = self._execute_context(
+realtor_fastapi   |           ^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+realtor_fastapi   |     return self._exec_single_context(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+realtor_fastapi   |     self._handle_dbapi_exception(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+realtor_fastapi   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   | [SQL: SELECT count(*) AS count_1
+realtor_fastapi   | FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | FROM app_settings) AS anon_1]
+realtor_fastapi   | (Background on this error at: https://sqlalche.me/e/20/f405)
+realtor_fastapi   |
+realtor_fastapi   | ERROR:    Application startup failed. Exiting.
+realtor_postgres  |     FROM app_settings) AS anon_1
+realtor_fastapi exited with code 3 (restarting)
+realtor_fastapi   | INFO:     Started server process [1]
+realtor_fastapi   | INFO:     Waiting for application startup.
+realtor_postgres  | 2026-11-17 16:05:38.170 UTC [67] ERROR:  column app_settings.hero_title does not exist at character 132
+realtor_postgres  | 2026-11-17 16:05:38.170 UTC [67] STATEMENT:  SELECT count(*) AS count_1
+realtor_postgres  |     FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | ERROR:    Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | psycopg2.errors.UndefinedColumn: column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   |
+realtor_fastapi   | The above exception was the direct cause of the following exception:
+realtor_fastapi   |
+realtor_fastapi   | Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 693, in lifespan
+realtor_fastapi   |     async with self.lifespan_context(app) as maybe_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/app/app/main.py", line 29, in lifespan
+realtor_fastapi   |     seed_initial_data(db)
+realtor_fastapi   |   File "/app/app/seed.py", line 123, in seed_initial_data
+realtor_fastapi   |     if db.query(AppSettings).count() == 0:
+realtor_fastapi   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3142, in count
+realtor_fastapi   |     self._legacy_from_self(col).enable_eagerloads(False).scalar()
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2831, in scalar
+realtor_fastapi   |     ret = self.one()
+realtor_fastapi   |           ^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2804, in one
+realtor_fastapi   |     return self._iter().one()  # type: ignore
+realtor_fastapi   |            ^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+realtor_fastapi   |     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+realtor_postgres  |     FROM app_settings) AS anon_1
+realtor_fastapi   |                                                   ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+realtor_fastapi   |     return self._execute_internal(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+realtor_fastapi   |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+realtor_fastapi   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+realtor_fastapi   |     result = conn.execute(
+realtor_fastapi   |              ^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+realtor_fastapi   |     return meth(
+realtor_fastapi   |            ^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+realtor_fastapi   |     return connection._execute_clauseelement(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+realtor_fastapi   |     ret = self._execute_context(
+realtor_fastapi   |           ^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+realtor_fastapi   |     return self._exec_single_context(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+realtor_fastapi   |     self._handle_dbapi_exception(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+realtor_fastapi   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   | [SQL: SELECT count(*) AS count_1
+realtor_fastapi   | FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | FROM app_settings) AS anon_1]
+realtor_fastapi   | (Background on this error at: https://sqlalche.me/e/20/f405)
+realtor_fastapi   |
+realtor_fastapi   | ERROR:    Application startup failed. Exiting.
+realtor_fastapi exited with code 3 (restarting)
+realtor_fastapi   | INFO:     Started server process [1]
+realtor_fastapi   | INFO:     Waiting for application startup.
+realtor_postgres  | 2026-11-17 16:05:42.599 UTC [68] ERROR:  column app_settings.hero_title does not exist at character 132
+realtor_postgres  | 2026-11-17 16:05:42.599 UTC [68] STATEMENT:  SELECT count(*) AS count_1
+realtor_postgres  |     FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | ERROR:    Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | psycopg2.errors.UndefinedColumn: column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   |
+realtor_fastapi   | The above exception was the direct cause of the following exception:
+realtor_fastapi   |
+realtor_fastapi   | Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 693, in lifespan
+realtor_fastapi   |     async with self.lifespan_context(app) as maybe_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/app/app/main.py", line 29, in lifespan
+realtor_fastapi   |     seed_initial_data(db)
+realtor_fastapi   |   File "/app/app/seed.py", line 123, in seed_initial_data
+realtor_fastapi   |     if db.query(AppSettings).count() == 0:
+realtor_fastapi   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3142, in count
+realtor_fastapi   |     self._legacy_from_self(col).enable_eagerloads(False).scalar()
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2831, in scalar
+realtor_fastapi   |     ret = self.one()
+realtor_fastapi   |           ^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2804, in one
+realtor_fastapi   |     return self._iter().one()  # type: ignore
+realtor_fastapi   |            ^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+realtor_fastapi   |     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+realtor_fastapi   |                                                   ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+realtor_fastapi   |     return self._execute_internal(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+realtor_fastapi   |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+realtor_fastapi   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+realtor_fastapi   |     result = conn.execute(
+realtor_fastapi   |              ^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+realtor_fastapi   |     return meth(
+realtor_fastapi   |            ^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+realtor_fastapi   |     return connection._execute_clauseelement(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+realtor_fastapi   |     ret = self._execute_context(
+realtor_fastapi   |           ^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+realtor_fastapi   |     return self._exec_single_context(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+realtor_fastapi   |     self._handle_dbapi_exception(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+realtor_fastapi   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   | [SQL: SELECT count(*) AS count_1
+realtor_fastapi   | FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | FROM app_settings) AS anon_1]
+realtor_fastapi   | (Background on this error at: https://sqlalche.me/e/20/f405)
+realtor_fastapi   |
+realtor_fastapi   | ERROR:    Application startup failed. Exiting.
+realtor_postgres  |     FROM app_settings) AS anon_1
+realtor_fastapi exited with code 3 (restarting)
+realtor_fastapi   | INFO:     Started server process [1]
+realtor_fastapi   | INFO:     Waiting for application startup.
+realtor_postgres  | 2026-11-17 16:05:48.507 UTC [84] ERROR:  column app_settings.hero_title does not exist at character 132
+realtor_postgres  | 2026-11-17 16:05:48.507 UTC [84] STATEMENT:  SELECT count(*) AS count_1
+realtor_fastapi   | ERROR:    Traceback (most recent call last):
+realtor_postgres  |     FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | psycopg2.errors.UndefinedColumn: column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   |
+realtor_fastapi   | The above exception was the direct cause of the following exception:
+realtor_fastapi   |
+realtor_fastapi   | Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 693, in lifespan
+realtor_fastapi   |     async with self.lifespan_context(app) as maybe_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/app/app/main.py", line 29, in lifespan
+realtor_fastapi   |     seed_initial_data(db)
+realtor_fastapi   |   File "/app/app/seed.py", line 123, in seed_initial_data
+realtor_fastapi   |     if db.query(AppSettings).count() == 0:
+realtor_fastapi   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3142, in count
+realtor_fastapi   |     self._legacy_from_self(col).enable_eagerloads(False).scalar()
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2831, in scalar
+realtor_fastapi   |     ret = self.one()
+realtor_fastapi   |           ^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2804, in one
+realtor_fastapi   |     return self._iter().one()  # type: ignore
+realtor_fastapi   |            ^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+realtor_fastapi   |     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+realtor_fastapi   |                                                   ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+realtor_fastapi   |     return self._execute_internal(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+realtor_fastapi   |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+realtor_fastapi   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+realtor_fastapi   |     result = conn.execute(
+realtor_fastapi   |              ^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+realtor_fastapi   |     return meth(
+realtor_fastapi   |            ^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+realtor_fastapi   |     return connection._execute_clauseelement(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+realtor_fastapi   |     ret = self._execute_context(
+realtor_fastapi   |           ^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+realtor_fastapi   |     return self._exec_single_context(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+realtor_fastapi   |     self._handle_dbapi_exception(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+realtor_fastapi   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   | [SQL: SELECT count(*) AS count_1
+realtor_fastapi   | FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | FROM app_settings) AS anon_1]
+realtor_fastapi   | (Background on this error at: https://sqlalche.me/e/20/f405)
+realtor_fastapi   |
+realtor_fastapi   | ERROR:    Application startup failed. Exiting.
+realtor_postgres  |     FROM app_settings) AS anon_1
+realtor_fastapi exited with code 3 (restarting)
+realtor_fastapi   | INFO:     Started server process [1]
+realtor_fastapi   | INFO:     Waiting for application startup.
+realtor_postgres  | 2026-11-17 16:05:57.662 UTC [92] ERROR:  column app_settings.hero_title does not exist at character 132
+realtor_postgres  | 2026-11-17 16:05:57.662 UTC [92] STATEMENT:  SELECT count(*) AS count_1
+realtor_postgres  |     FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | ERROR:    Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | psycopg2.errors.UndefinedColumn: column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   |
+realtor_fastapi   | The above exception was the direct cause of the following exception:
+realtor_fastapi   |
+realtor_fastapi   | Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 693, in lifespan
+realtor_fastapi   |     async with self.lifespan_context(app) as maybe_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/app/app/main.py", line 29, in lifespan
+realtor_fastapi   |     seed_initial_data(db)
+realtor_fastapi   |   File "/app/app/seed.py", line 123, in seed_initial_data
+realtor_fastapi   |     if db.query(AppSettings).count() == 0:
+realtor_fastapi   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3142, in count
+realtor_fastapi   |     self._legacy_from_self(col).enable_eagerloads(False).scalar()
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2831, in scalar
+realtor_fastapi   |     ret = self.one()
+realtor_fastapi   |           ^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2804, in one
+realtor_fastapi   |     return self._iter().one()  # type: ignore
+realtor_fastapi   |            ^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+realtor_fastapi   |     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+realtor_fastapi   |                                                   ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+realtor_fastapi   |     return self._execute_internal(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+realtor_fastapi   |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+realtor_fastapi   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+realtor_fastapi   |     result = conn.execute(
+realtor_fastapi   |              ^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+realtor_fastapi   |     return meth(
+realtor_fastapi   |            ^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+realtor_fastapi   |     return connection._execute_clauseelement(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+realtor_fastapi   |     ret = self._execute_context(
+realtor_fastapi   |           ^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+realtor_fastapi   |     return self._exec_single_context(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+realtor_fastapi   |     self._handle_dbapi_exception(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+realtor_fastapi   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   | [SQL: SELECT count(*) AS count_1
+realtor_fastapi   | FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | FROM app_settings) AS anon_1]
+realtor_fastapi   | (Background on this error at: https://sqlalche.me/e/20/f405)
+realtor_fastapi   |
+realtor_fastapi   | ERROR:    Application startup failed. Exiting.
+realtor_postgres  |     FROM app_settings) AS anon_1
+realtor_fastapi exited with code 3 (restarting)
+realtor_fastapi   | INFO:     Started server process [1]
+realtor_fastapi   | INFO:     Waiting for application startup.
+realtor_postgres  | 2026-11-17 16:06:13.120 UTC [115] ERROR:  column app_settings.hero_title does not exist at character 132
+realtor_postgres  | 2026-11-17 16:06:13.120 UTC [115] STATEMENT:  SELECT count(*) AS count_1
+realtor_postgres  |     FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | ERROR:    Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | psycopg2.errors.UndefinedColumn: column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   |
+realtor_fastapi   | The above exception was the direct cause of the following exception:
+realtor_fastapi   |
+realtor_fastapi   | Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 693, in lifespan
+realtor_fastapi   |     async with self.lifespan_context(app) as maybe_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/app/app/main.py", line 29, in lifespan
+realtor_fastapi   |     seed_initial_data(db)
+realtor_fastapi   |   File "/app/app/seed.py", line 123, in seed_initial_data
+realtor_fastapi   |     if db.query(AppSettings).count() == 0:
+realtor_fastapi   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3142, in count
+realtor_fastapi   |     self._legacy_from_self(col).enable_eagerloads(False).scalar()
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2831, in scalar
+realtor_fastapi   |     ret = self.one()
+realtor_fastapi   |           ^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2804, in one
+realtor_fastapi   |     return self._iter().one()  # type: ignore
+realtor_fastapi   |            ^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+realtor_fastapi   |     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+realtor_fastapi   |                                                   ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+realtor_fastapi   |     return self._execute_internal(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+realtor_fastapi   |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+realtor_fastapi   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+realtor_fastapi   |     result = conn.execute(
+realtor_fastapi   |              ^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+realtor_fastapi   |     return meth(
+realtor_fastapi   |            ^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+realtor_fastapi   |     return connection._execute_clauseelement(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+realtor_fastapi   |     ret = self._execute_context(
+realtor_fastapi   |           ^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+realtor_fastapi   |     return self._exec_single_context(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+realtor_fastapi   |     self._handle_dbapi_exception(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+realtor_fastapi   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   | [SQL: SELECT count(*) AS count_1
+realtor_fastapi   | FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | FROM app_settings) AS anon_1]
+realtor_fastapi   | (Background on this error at: https://sqlalche.me/e/20/f405)
+realtor_fastapi   |
+realtor_fastapi   | ERROR:    Application startup failed. Exiting.
+realtor_postgres  |     FROM app_settings) AS anon_1
+realtor_fastapi exited with code 3 (restarting)
+realtor_fastapi   | INFO:     Started server process [1]
+realtor_fastapi   | INFO:     Waiting for application startup.
+realtor_postgres  | 2026-11-17 16:06:41.366 UTC [160] ERROR:  column app_settings.hero_title does not exist at character 132
+realtor_postgres  | 2026-11-17 16:06:41.366 UTC [160] STATEMENT:  SELECT count(*) AS count_1
+realtor_postgres  |     FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_postgres  |     FROM app_settings) AS anon_1
+realtor_fastapi   | ERROR:    Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | psycopg2.errors.UndefinedColumn: column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   |
+realtor_fastapi   | The above exception was the direct cause of the following exception:
+realtor_fastapi   |
+realtor_fastapi   | Traceback (most recent call last):
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/starlette/routing.py", line 693, in lifespan
+realtor_fastapi   |     async with self.lifespan_context(app) as maybe_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+realtor_fastapi   |     async with original_context(app) as maybe_original_state:
+realtor_fastapi   |                ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/contextlib.py", line 210, in __aenter__
+realtor_fastapi   |     return await anext(self.gen)
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/app/app/main.py", line 29, in lifespan
+realtor_fastapi   |     seed_initial_data(db)
+realtor_fastapi   |   File "/app/app/seed.py", line 123, in seed_initial_data
+realtor_fastapi   |     if db.query(AppSettings).count() == 0:
+realtor_fastapi   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3142, in count
+realtor_fastapi   |     self._legacy_from_self(col).enable_eagerloads(False).scalar()
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2831, in scalar
+realtor_fastapi   |     ret = self.one()
+realtor_fastapi   |           ^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2804, in one
+realtor_fastapi   |     return self._iter().one()  # type: ignore
+realtor_fastapi   |            ^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+realtor_fastapi   |     result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+realtor_fastapi   |                                                   ^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+realtor_fastapi   |     return self._execute_internal(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+realtor_fastapi   |     result: Result[Any] = compile_state_cls.orm_execute_statement(
+realtor_fastapi   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+realtor_fastapi   |     result = conn.execute(
+realtor_fastapi   |              ^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+realtor_fastapi   |     return meth(
+realtor_fastapi   |            ^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+realtor_fastapi   |     return connection._execute_clauseelement(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+realtor_fastapi   |     ret = self._execute_context(
+realtor_fastapi   |           ^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+realtor_fastapi   |     return self._exec_single_context(
+realtor_fastapi   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+realtor_fastapi   |     self._handle_dbapi_exception(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+realtor_fastapi   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+realtor_fastapi   |     self.dialect.do_execute(
+realtor_fastapi   |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+realtor_fastapi   |     cursor.execute(statement, parameters)
+realtor_fastapi   | sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column app_settings.hero_title does not exist
+realtor_fastapi   | LINE 2: ...settings.agency_name AS app_settings_agency_name, app_settin...
+realtor_fastapi   |                                                              ^
+realtor_fastapi   |
+realtor_fastapi   | [SQL: SELECT count(*) AS count_1
+realtor_fastapi   | FROM (SELECT app_settings.id AS app_settings_id, app_settings.agency_name AS app_settings_agency_name, app_settings.hero_title AS app_settings_hero_title, app_settings.hero_subtitle AS app_settings_hero_subtitle, app_settings.about_text AS app_settings_about_text, app_settings.stat_years AS app_settings_stat_years, app_settings.stat_deals AS app_settings_stat_deals, app_settings.stat_clients AS app_settings_stat_clients, app_settings.stat_satisfaction AS app_settings_stat_satisfaction, app_settings.agency_inn AS app_settings_agency_inn, app_settings.agency_phone AS app_settings_agency_phone, app_settings.agency_email AS app_settings_agency_email, app_settings.agency_address AS app_settings_agency_address, app_settings.reviews_require_moderation AS app_settings_reviews_require_moderation
+realtor_fastapi   | FROM app_settings) AS anon_1]
+realtor_fastapi   | (Background on this error at: https://sqlalche.me/e/20/f405)
+realtor_fastapi   |
+realtor_fastapi   | ERROR:    Application startup failed. Exiting.
+realtor_fastapi exited with code 3 (restarting)

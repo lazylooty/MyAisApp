@@ -1,0 +1,78 @@
+{% extends "app_base.html" %}
+
+{% block title %}Визитки сотрудников{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Визитки сотрудников</h1>
+  <p class="muted">Управление публичными визитными карточками специалистов, отображаемыми на странице «О себе».</p>
+</header>
+
+<section class="card">
+  <h2>Добавить или обновить визитку</h2>
+  <form method="post" action="/team/save" enctype="multipart/form-data" class="form">
+    <div class="form-grid">
+      <label class="field">
+        <span>Сотрудник *</span>
+        <select name="user_id" required>
+          {% for st in staff_users %}
+          <option value="{{ st.id_user }}">{{ st.full_name }} ({{ st.role.name }})</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Должность *</span>
+        <select name="position_id" required>
+          {% for pos in positions %}
+          <option value="{{ pos.id_position }}">{{ pos.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Стаж работы (лет) *</span>
+        <input type="number" name="experience_years" min="0" max="100" value="5" required />
+      </label>
+      <label class="field">
+        <span>Фотография (JPG, PNG, WEBP до 5 МБ)</span>
+        <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp" />
+      </label>
+    </div>
+    <label class="field">
+      <span>Описание профессионального опыта</span>
+      <textarea name="description" rows="3" maxlength="1000" placeholder="Специализация, опыт сделок..."></textarea>
+    </label>
+    <div>
+      <button type="submit" class="btn btn-primary">Сохранить визитку</button>
+    </div>
+  </form>
+</section>
+
+<section class="card section-gap">
+  <h2>Текущие визитки ({{ cards | length }})</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Сотрудник</th>
+          <th>Должность</th>
+          <th>Стаж и рейтинг</th>
+          <th>Описание</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in cards %}
+        <tr>
+          <td>
+            <strong>{{ c.user.full_name }}</strong><br />
+            <span class="muted text-xs">{{ c.photo_path or "Без фото (инициалы)" }}</span>
+          </td>
+          <td>{{ c.position.name }}</td>
+          <td class="tabular">{{ c.experience_years }} лет • ★ {{ c.rating }}</td>
+          <td>{{ c.description or "—" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "public_base.html" %}
+
+{% block title %}Объекты недвижимости — {{ agency.agency_name if agency else "ИП Голубина О.Г." }}{% endblock %}
+
+{% block content %}
+<section class="standalone-shell">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Каталог</span>
+        <h1>Объекты недвижимости</h1>
+        <p class="section-lead">Проверенные объекты жилой и коммерческой недвижимости. Нажмите «Записаться», чтобы договориться о показе.</p>
+      </div>
+      <label for="inquiry-toggle" class="btn btn-primary btn-sm">Записаться на просмотр</label>
+    </div>
+
+    <form method="get" action="/catalog" class="filter-bar">
+      <label class="field">
+        <span>Район</span>
+        <select name="district_id">
+          <option value="">Все районы</option>
+          {% for d in districts %}
+          <option value="{{ d.id_district }}" {% if filters.district_id == d.id_district %}selected{% endif %}>{{ d.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Категория</span>
+        <select name="category_id">
+          <option value="">Любая</option>
+          {% for c in categories %}
+          <option value="{{ c.id_property_type }}" {% if filters.category_id == c.id_property_type %}selected{% endif %}>{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Комнат</span>
+        <input type="number" name="rooms" min="1" value="{{ filters.rooms or '' }}" placeholder="Любое" />
+      </label>
+      <label class="field">
+        <span>Макс. цена (₽)</span>
+        <input type="number" name="max_price" step="50000" value="{{ filters.max_price }}" placeholder="Например 12000000" />
+      </label>
+      <div class="filter-actions">
+        <button type="submit" class="btn btn-primary btn-sm">Найти</button>
+        <a href="/catalog" class="btn btn-outline btn-sm">Сбросить</a>
+      </div>
+    </form>
+
+    {% if properties %}
+    <div class="cards-grid">
+      {% for prop in properties %}
+      <article class="property-card">
+        <div>
+          <div class="property-meta-row">
+            <span>{{ prop.district.name }} • {{ prop.category.name }}</span>
+            <span class="status-tag {% if prop.status.name == 'Доступен' %}ok{% elif prop.status.name == 'Забронирован' %}warn{% endif %}">{{ prop.status.name }}</span>
+          </div>
+          <h3 class="property-title">{{ prop.address }}</h3>
+          <div class="property-specs">
+            <span>{{ prop.total_area }} м²</span>
+            <span>{{ prop.rooms_count }} комн.</span>
+            <span>{{ prop.floor }} этаж</span>
+            <span>{{ prop.building_type.name }}</span>
+            <span>{{ prop.repair_type.name }}</span>
+          </div>
+          {% if prop.description %}
+          <p class="property-desc">{{ prop.description }}</p>
+          {% endif %}
+        </div>
+        <div class="property-footer">
+          <div>
+            <div class="property-price">{{ prop.price | money }}</div>
+            <div class="property-sqm">{{ sqm_price(prop.price, prop.total_area) }}</div>
+          </div>
+          <label for="inquiry-toggle" class="btn btn-primary btn-sm">Записаться</label>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="card">
+      <p class="muted">По выбранным параметрам объекты не найдены.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block modal_form %}
+<form method="post" action="/inquiries/submit" class="modal-body">
+  <input type="hidden" name="redirect_to" value="/catalog" />
+  <input type="hidden" name="inquiry_type" value="Запись на просмотр" />
+  <label class="field">
+    <span>Объект недвижимости</span>
+    <select name="property_id">
+      <option value="0">— Любой подходящий —</option>
+      {% for prop in properties %}
+      <option value="{{ prop.id_property }}">{{ prop.address }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label class="field">
+    <span>Ваше имя *</span>
+    <input type="text" name="full_name" value="{{ current_user.full_name if current_user else '' }}" required />
+  </label>
+  <label class="field">
+    <span>Телефон *</span>
+    <input type="text" name="phone" value="{{ current_user.phone if current_user else '' }}" required />
+  </label>
+  <label class="field">
+    <span>Комментарий</span>
+    <textarea name="message" rows="3" placeholder="Желаемые дата и время показа..."></textarea>
+  </label>
+  <button type="submit" class="btn btn-primary">Отправить заявку</button>
+</form>
+{% endblock %}

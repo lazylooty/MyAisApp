@@ -1,0 +1,6 @@
+{
+  "name": "ИП Голубина О.Г. — Редактор документов",
+  "description": "Веб-приложение на Python FastAPI, PostgreSQL и Docker для автоматизации работы риэлторского агентства ИП Голубина Ольга Геннадьевна: загрузка .docx шаблонов и генерация договоров.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

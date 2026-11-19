@@ -1,0 +1,102 @@
+{% extends "app_base.html" %}
+
+{% block title %}Личный профиль и уведомления{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Личный профиль и уведомления</h1>
+  <p class="muted">Персональные данные, паспортные реквизиты для автозаполнения договоров и системные оповещения.</p>
+</header>
+
+<section class="grid-two">
+  <div class="card">
+    <h2>Мои данные</h2>
+    <form method="post" action="/profile/update" class="form">
+      <label class="field">
+        <span>ФИО *</span>
+        <input type="text" name="full_name" value="{{ current_user.full_name }}" required />
+      </label>
+      <label class="field">
+        <span>Телефон *</span>
+        <input type="text" name="phone" value="{{ current_user.phone }}" required />
+      </label>
+      <label class="field">
+        <span>Email *</span>
+        <input type="email" name="email" value="{{ current_user.email }}" required />
+      </label>
+      <label class="field">
+        <span>ИНН</span>
+        <input type="text" name="inn" maxlength="12" value="{{ current_user.inn or '' }}" />
+      </label>
+      <button type="submit" class="btn btn-primary">Сохранить профиль</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Паспортные данные (для договоров)</h2>
+    <form method="post" action="/profile/passport" class="form">
+      <div class="form-grid">
+        <label class="field">
+          <span>Серия *</span>
+          <input type="text" name="passport_series" maxlength="4" required value="{{ current_user.passport.passport_series if current_user.passport else '' }}" />
+        </label>
+        <label class="field">
+          <span>Номер *</span>
+          <input type="text" name="passport_number" maxlength="6" required value="{{ current_user.passport.passport_number if current_user.passport else '' }}" />
+        </label>
+        <label class="field">
+          <span>Дата выдачи *</span>
+          <input type="date" name="issue_date" required value="{{ (current_user.passport.issue_date | dt('%Y-%m-%d')) if current_user.passport else '' }}" />
+        </label>
+        <label class="field">
+          <span>Код подразделения *</span>
+          <input type="text" name="department_code" maxlength="7" required value="{{ current_user.passport.department_code if current_user.passport else '' }}" />
+        </label>
+      </div>
+      <label class="field">
+        <span>Кем выдан *</span>
+        <input type="text" name="issued_by" maxlength="255" required value="{{ current_user.passport.issued_by if current_user.passport else '' }}" />
+      </label>
+      <button type="submit" class="btn btn-secondary">Сохранить паспортные данные</button>
+    </form>
+  </div>
+</section>
+
+<section class="card section-gap">
+  <div class="card-head-row">
+    <h2>Персональные уведомления</h2>
+    <form method="post" action="/notifications/read-all">
+      <button type="submit" class="btn btn-small">Отметить все прочитанными</button>
+    </form>
+  </div>
+
+  {% if notifications %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Дата</th>
+          <th>Сообщение</th>
+          <th>Статус</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for n in notifications %}
+        <tr>
+          <td class="tabular">{{ n.send_datetime | dt }}</td>
+          <td>{{ n.message_text }}</td>
+          <td>
+            <span class="status-tag {% if n.is_read %}ok{% else %}warn{% endif %}">
+              {{ "Прочитано" if n.is_read else "Новое" }}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">Уведомлений пока нет.</p>
+  {% endif %}
+</section>
+{% endblock %}

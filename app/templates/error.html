@@ -1,0 +1,21 @@
+{% extends "app_base.html" if current_user else "public_base.html" %}
+
+{% block title %}Ошибка {{ status_code }}{% endblock %}
+
+{% block content %}
+<section class="{% if not current_user %}standalone-shell{% endif %}">
+  <div class="{% if not current_user %}container{% endif %}">
+    <div class="auth-wrap">
+      <span class="eyebrow">Код {{ status_code }}</span>
+      <h1>{{ error_title }}</h1>
+      <p class="auth-lead">{{ error_detail }}</p>
+      <div class="actions-row">
+        <a href="/" class="btn btn-primary btn-sm">На главную</a>
+        {% if current_user %}
+        <a href="/properties" class="btn btn-outline btn-sm">В рабочую панель</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "app_base.html" %}
+
+{% block title %}График показов{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>График показов и встреч</h1>
+  <p class="muted">
+    {% if is_staff %}
+    Планирование показов объектов недвижимости с автоматической проверкой накладок в расписании и оповещением клиента.
+    {% else %}
+    Ваше персональное расписание запланированных показов объектов недвижимости.
+    {% endif %}
+  </p>
+</header>
+
+{% if is_staff %}
+<section class="card">
+  <h2>Запланировать показ</h2>
+  <form method="post" action="/showings/create" class="form">
+    <div class="form-grid">
+      <label class="field">
+        <span>Объект недвижимости *</span>
+        <select name="property_id" required>
+          {% for p in properties %}
+          <option value="{{ p.id_property }}">{{ p.address }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Клиент *</span>
+        <select name="client_id" required>
+          {% for c in clients %}
+          <option value="{{ c.id_client }}">{{ c.user.full_name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Ответственный специалист *</span>
+        <select name="realtor_id" required>
+          {% for r in realtors %}
+          <option value="{{ r.id_user }}">{{ r.full_name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Дата и время показа *</span>
+        <input type="datetime-local" name="showing_datetime" required />
+      </label>
+    </div>
+    <label class="field">
+      <span>Комментарий</span>
+      <input type="text" name="result_comment" placeholder="Например: встреча у подъезда №2" />
+    </label>
+    <div>
+      <button type="submit" class="btn btn-primary">Записать на показ</button>
+    </div>
+  </form>
+</section>
+{% endif %}
+
+<section class="card section-gap">
+  <h2>Запланированные показы ({{ showings | length }})</h2>
+  {% if showings %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Дата и время</th>
+          <th>Объект</th>
+          <th>Клиент</th>
+          <th>Риэлтор</th>
+          <th>Статус и комментарий</th>
+          {% if is_staff %}
+          <th>Обновить</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for sh in showings %}
+        <tr>
+          <td class="tabular"><strong>{{ sh.showing_datetime | dt }}</strong></td>
+          <td>{{ sh.property_obj.address }}</td>
+          <td>{{ sh.client.user.full_name }}</td>
+          <td>{{ sh.realtor.full_name }}</td>
+          <td>
+            <span class="status-tag {% if sh.showing_status.name == 'Проведен' %}ok{% elif sh.showing_status.name == 'Запланирован' %}warn{% endif %}">
+              {{ sh.showing_status.name }}
+            </span>
+            {% if sh.result_comment %}
+            <div class="cell-note">{{ sh.result_comment }}</div>
+            {% endif %}
+          </td>
+          {% if is_staff %}
+          <td>
+            <form method="post" action="/showings/{{ sh.id_showing }}/status" class="actions-row">
+              <select name="showing_status_id" class="select-compact">
+                {% for st in showing_statuses %}
+                <option value="{{ st.id_showing_status }}" {% if st.id_showing_status == sh.id_showing_status %}selected{% endif %}>{{ st.name }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="btn btn-small">Ок</button>
+            </form>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">Запланированных показов пока нет.</p>
+  {% endif %}
+</section>
+{% endblock %}

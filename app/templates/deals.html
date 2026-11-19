@@ -1,0 +1,200 @@
+{% extends "app_base.html" %}
+
+{% block title %}Сделки{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Сделки</h1>
+  <p class="muted">
+    {% if is_staff %}
+    Сопровождение сделок купли-продажи и аренды, контроль этапов воронки, эскроу-счетов и участников.
+    {% else %}
+    Информация об этапах ваших активных сделок и прикрепленных договорах.
+    {% endif %}
+  </p>
+</header>
+
+{% if is_staff %}
+<section class="card">
+  <h2>Открыть новую сделку</h2>
+  <form method="post" action="/deals/create" class="form">
+    <div class="form-grid">
+      <label class="field">
+        <span>Объект недвижимости *</span>
+        <select name="property_id" required>
+          {% for p in properties %}
+          <option value="{{ p.id_property }}">{{ p.address }} ({{ p.price | money }})</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Ответственный риэлтор *</span>
+        <select name="realtor_id" required>
+          {% for r in realtors %}
+          <option value="{{ r.id_user }}">{{ r.full_name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Вид сделки *</span>
+        <select name="deal_type_id" required>
+          {% for dt in deal_types %}
+          <option value="{{ dt.id_deal_type }}">{{ dt.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Статус сделки *</span>
+        <select name="deal_status_id" required>
+          {% for ds in deal_statuses %}
+          <option value="{{ ds.id_deal_status }}">{{ ds.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Статус эскроу-счета *</span>
+        <select name="escrow_status_id" required>
+          {% for es in escrow_statuses %}
+          <option value="{{ es.id_escrow_status }}">{{ es.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Итоговая сумма договора (₽) *</span>
+        <input type="number" name="final_price" step="1000" min="1000" required placeholder="8950000" />
+      </label>
+      <label class="field">
+        <span>Комиссия агентства (%)</span>
+        <input type="number" name="commission_rate" step="0.1" min="0" max="100" value="2.5" />
+      </label>
+    </div>
+
+    <div class="form-grid">
+      <label class="field">
+        <span>Участник 1 (Клиент) *</span>
+        <select name="client_1_id" required>
+          {% for c in clients %}
+          <option value="{{ c.id_client }}">{{ c.user.full_name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Роль участника 1 *</span>
+        <select name="client_1_role_id" required>
+          {% for cr in client_roles %}
+          <option value="{{ cr.id_client_role }}">{{ cr.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Участник 2 (необязательно)</span>
+        <select name="client_2_id">
+          <option value="0">— Не выбран —</option>
+          {% for c in clients %}
+          <option value="{{ c.id_client }}">{{ c.user.full_name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="field">
+        <span>Роль участника 2</span>
+        <select name="client_2_role_id">
+          {% for cr in client_roles %}
+          <option value="{{ cr.id_client_role }}" {% if cr.name == 'Продавец' %}selected{% endif %}>{{ cr.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+
+    <div>
+      <button type="submit" class="btn btn-primary">Создать сделку</button>
+    </div>
+  </form>
+</section>
+{% endif %}
+
+<section class="card section-gap">
+  <h2>Реестр сделок ({{ deals | length }})</h2>
+  {% if deals %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>№ и тип</th>
+          <th>Объект и сумма</th>
+          <th>Участники</th>
+          <th>Статус / Эскроу</th>
+          <th>Договоры</th>
+          {% if is_staff %}
+          <th>Управление</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in deals %}
+        <tr>
+          <td class="tabular">
+            <strong>Сделка №{{ d.id_deal }}</strong><br />
+            <span class="muted text-xs">{{ d.deal_type.name }} • {{ d.start_date | dt("%d.%m.%Y") }}</span>
+          </td>
+          <td class="tabular">
+            <strong>{{ d.property_obj.address }}</strong><br />
+            <span>{{ d.final_price | money }}</span>
+            <span class="muted text-xs">(комиссия {{ d.commission_rate }}%)</span>
+          </td>
+          <td>
+            {% for part in d.participants %}
+            <div class="cell-line">
+              <strong>{{ part.client_role.name }}:</strong> {{ part.client.user.full_name }}
+            </div>
+            {% endfor %}
+            <div class="cell-note">Риэлтор: {{ d.realtor.full_name }}</div>
+          </td>
+          <td>
+            <span class="status-tag {% if d.deal_status.name == 'Завершена' %}ok{% else %}warn{% endif %}">
+              {{ d.deal_status.name }}
+            </span>
+            <div class="cell-note">Эскроу: {{ d.escrow_status.name }}</div>
+          </td>
+          <td>
+            {% if d.contracts %}
+            {% for ct in d.contracts %}
+            <div class="cell-form-stack">
+              <a href="/contracts/{{ ct.id_contract }}/download" class="btn btn-small">№{{ ct.contract_number }}</a>
+            </div>
+            {% endfor %}
+            {% else %}
+            <span class="muted text-xs">Нет договоров</span>
+            {% endif %}
+          </td>
+          {% if is_staff %}
+          <td>
+            <form method="post" action="/deals/{{ d.id_deal }}/update" class="form-compact">
+              <select name="deal_status_id" class="select-compact">
+                {% for ds in deal_statuses %}
+                <option value="{{ ds.id_deal_status }}" {% if ds.id_deal_status == d.id_deal_status %}selected{% endif %}>{{ ds.name }}</option>
+                {% endfor %}
+              </select>
+              <select name="escrow_status_id" class="select-compact">
+                {% for es in escrow_statuses %}
+                <option value="{{ es.id_escrow_status }}" {% if es.id_escrow_status == d.id_escrow_status %}selected{% endif %}>{{ es.name }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="btn btn-small">Обновить</button>
+            </form>
+            {% if is_senior %}
+            <form method="post" action="/deals/{{ d.id_deal }}/delete" class="cell-delete-stack">
+              <button type="submit" class="btn btn-danger-outline">Удалить</button>
+            </form>
+            {% endif %}
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">Сделок пока нет.</p>
+  {% endif %}
+</section>
+{% endblock %}

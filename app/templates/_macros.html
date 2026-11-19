@@ -1,0 +1,46 @@
+{% macro render_header(agency, current_user, active_nav='', standalone=False) %}
+<header class="site-header {% if standalone %}site-header--standalone{% endif %}">
+  <div class="header-bar">
+    <a href="/" class="brand-mark">
+      <span class="brand-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M3 10.5L12 3l9 7.5" />
+          <path d="M5 9.5V20h14V9.5" />
+          <path d="M9.5 20v-6h5v6" />
+        </svg>
+      </span>
+      <span class="brand-name">{{ agency.agency_name if agency else "ИП Голубина О.Г." }}</span>
+    </a>
+
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+    <nav class="header-nav">
+      <a href="/" class="{% if active_nav == 'about' %}active{% endif %}">
+        <span>О себе</span>
+        <span class="nav-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a href="/catalog" class="{% if active_nav == 'catalog' %}active{% endif %}">
+        <span>Объекты недвижимости</span>
+        <span class="nav-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a href="/reviews" class="{% if active_nav == 'reviews' %}active{% endif %}">
+        <span>Отзывы</span>
+        <span class="nav-arrow" aria-hidden="true">↗</span>
+      </a>
+    </nav>
+
+    <div class="header-right">
+      <div class="header-hours">
+        Время работы:<br />с 09:00 до 20:00
+      </div>
+      <label for="inquiry-toggle" class="btn btn-primary btn-sm">Записаться</label>
+      {% if current_user %}
+      <a href="/properties" class="btn btn-slate btn-sm">Кабинет</a>
+      <a href="/logout" class="btn btn-outline btn-sm">Выйти</a>
+      {% else %}
+      <a href="/login" class="btn btn-outline btn-sm">Войти</a>
+      {% endif %}
+      <label for="nav-toggle" class="nav-burger" aria-label="Открыть меню">☰ Меню</label>
+    </div>
+  </div>
+</header>
+{% endmacro %}

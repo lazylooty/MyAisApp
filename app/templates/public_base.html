@@ -1,0 +1,108 @@
+{% from "_macros.html" import render_header %}
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{{ agency.agency_name if agency else "ИП Голубина Ольга Геннадьевна" }}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/public.css" />
+  </head>
+  <body>
+    <input type="checkbox" id="inquiry-toggle" class="modal-toggle" />
+
+    {% block shell_start %}
+    {{ render_header(agency, current_user, active_nav, standalone=True) }}
+    {% endblock %}
+
+    {% if message or error %}
+    <div class="alert-stack">
+      {% if message %}
+      <div class="alert alert-success">{{ message }}</div>
+      {% endif %}
+      {% if error %}
+      <div class="alert alert-error">{{ error }}</div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    {% block shell_end %}{% endblock %}
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-title">{{ agency.agency_name if agency else "ИП Голубина Ольга Геннадьевна" }}</div>
+            <p class="footer-muted">
+              ИНН: {{ agency.agency_inn if agency else "667109876543" }}<br />
+              Адрес: {{ agency.agency_address if agency else "г. Екатеринбург, ул. Малышева, д. 51" }}
+            </p>
+          </div>
+          <div>
+            <div class="footer-title">Разделы</div>
+            <div class="footer-links">
+              <a href="/">О себе</a>
+              <a href="/catalog">Объекты недвижимости</a>
+              <a href="/reviews">Отзывы клиентов</a>
+              <a href="/login">Вход в личный кабинет</a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-title">Контакты</div>
+            <p class="footer-muted">
+              Телефон: {{ agency.agency_phone if agency else "+7 (922) 123-45-67" }}<br />
+              Email: {{ agency.agency_email if agency else "golubina.realty@example.ru" }}
+            </p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 {{ agency.agency_name if agency else "ИП Голубина Ольга Геннадьевна" }}. Все права защищены.</span>
+          <span>АИС сопровождения сделок с недвижимостью</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 100% Pure CSS Modal (без JavaScript) -->
+    <div class="css-modal" role="dialog" aria-modal="true" aria-labelledby="inquiry-modal-title">
+      <label for="inquiry-toggle" class="modal-backdrop" aria-label="Закрыть окно"></label>
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h3 id="inquiry-modal-title">Запись к риэлтору</h3>
+          <label for="inquiry-toggle" class="modal-close" aria-label="Закрыть">×</label>
+        </div>
+        {% block modal_form %}
+        <form method="post" action="/inquiries/submit" class="modal-body">
+          <input type="hidden" name="redirect_to" value="/" />
+          <label class="field">
+            <span>Ваше имя / ФИО *</span>
+            <input type="text" name="full_name" value="{{ current_user.full_name if current_user else '' }}" required placeholder="Например: Алексей Смирнов" />
+          </label>
+          <label class="field">
+            <span>Телефон для связи *</span>
+            <input type="text" name="phone" value="{{ current_user.phone if current_user else '' }}" required placeholder="+7 (900) 000-00-00" />
+          </label>
+          <label class="field">
+            <span>Email (необязательно)</span>
+            <input type="email" name="email" value="{{ current_user.email if current_user else '' }}" placeholder="name@example.ru" />
+          </label>
+          <label class="field">
+            <span>Тема обращения</span>
+            <select name="inquiry_type">
+              <option value="Консультация по покупке">Консультация по покупке</option>
+              <option value="Продажа недвижимости">Продажа недвижимости</option>
+              <option value="Запись на просмотр">Запись на просмотр</option>
+              <option value="Юридическая проверка сделки">Юридическая проверка сделки</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Комментарий или пожелания</span>
+            <textarea name="message" rows="3" placeholder="Опишите бюджет, район или удобное время для звонка..."></textarea>
+          </label>
+          <button type="submit" class="btn btn-primary">Отправить обращение</button>
+        </form>
+        {% endblock %}
+      </div>
+    </div>
+  </body>
+</html>

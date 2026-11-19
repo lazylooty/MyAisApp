@@ -1,0 +1,96 @@
+{% extends "app_base.html" if current_user else "public_base.html" %}
+
+{% block title %}Отзывы клиентов{% endblock %}
+
+{% block content %}
+<div class="{% if not current_user %}standalone-shell{% endif %}">
+  <div class="{% if not current_user %}container{% endif %}">
+    <div class="page-header">
+      <h1>Отзывы клиентов</h1>
+      <p class="muted">Оценки и комментарии о работе агентства {{ agency.agency_name if agency else "ИП Голубина Ольга Геннадьевна" }}.</p>
+    </div>
+
+    {% if current_user %}
+    <section class="card card-spaced">
+      <h2 class="card-title">Оставить отзыв</h2>
+      <form method="post" action="/reviews/create" class="form">
+        <div class="form-grid">
+          <label class="field">
+            <span>Оценка</span>
+            <select name="rating" required>
+              <option value="5">5 — Отлично</option>
+              <option value="4">4 — Хорошо</option>
+              <option value="3">3 — Удовлетворительно</option>
+              <option value="2">2 — Плохо</option>
+              <option value="1">1 — Очень плохо</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Специалист (необязательно)</span>
+            <select name="target_user_id">
+              <option value="0">— Общий отзыв о компании —</option>
+              {% for st in staff_users %}
+              <option value="{{ st.id_user }}">{{ st.full_name }}</option>
+              {% endfor %}
+            </select>
+          </label>
+        </div>
+        <label class="field">
+          <span>Текст отзыва *</span>
+          <textarea name="review_text" rows="3" maxlength="2000" required placeholder="Поделитесь впечатлениями о сделке и работе специалиста..."></textarea>
+        </label>
+        <div>
+          <button type="submit" class="btn btn-primary">Опубликовать отзыв</button>
+        </div>
+      </form>
+    </section>
+    {% else %}
+    <div class="card notice-bar">
+      <span>Чтобы оставить свой отзыв, пожалуйста, войдите в личный кабинет или зарегистрируйтесь.</span>
+      <a href="/login" class="btn btn-primary btn-sm">Войти и оставить отзыв</a>
+    </div>
+    {% endif %}
+
+    <div class="cards-grid">
+      {% for rev in reviews %}
+      <article class="review-card">
+        <div>
+          <div class="review-head">
+            <span class="stars" aria-label="Оценка {{ rev.rating }} из 5">{% for _ in range(rev.rating) %}★{% endfor %}</span>
+            {% if rev.is_approved %}
+            <span class="status-tag ok">Опубликован</span>
+            {% else %}
+            <span class="status-tag warn">На модерации</span>
+            {% endif %}
+          </div>
+          <p class="review-quote">«{{ rev.review_text }}»</p>
+        </div>
+
+        <div>
+          <div class="review-author">{{ rev.author.full_name }}</div>
+          <div class="review-target">
+            {% if rev.target %}Адресат: {{ rev.target.full_name }} • {% endif %}
+            {{ rev.created_date | dt }}
+          </div>
+
+          {% if is_senior %}
+          <div class="review-actions">
+            <form method="post" action="/reviews/{{ rev.id_review }}/toggle">
+              <button type="submit" class="btn btn-small">
+                {{ "Скрыть" if rev.is_approved else "Одобрить" }}
+              </button>
+            </form>
+            <form method="post" action="/reviews/{{ rev.id_review }}/delete">
+              <button type="submit" class="btn btn-danger-outline">Удалить</button>
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      </article>
+      {% else %}
+      <p class="muted">Отзывы пока отсутствуют.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

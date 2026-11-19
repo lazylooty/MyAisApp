@@ -1,0 +1,118 @@
+{% extends "app_base.html" %}
+
+{% block title %}Обращения клиентов{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Обращения к риэлтору</h1>
+  <p class="muted">Заявки, поступившие через модальное окно на странице «О себе», а также новые обращения клиентов.</p>
+</header>
+
+<section class="card">
+  <h2>Новое обращение</h2>
+  <form method="post" action="/inquiries/submit" class="form">
+    <input type="hidden" name="redirect_to" value="/inquiries" />
+    <div class="form-grid">
+      <label class="field">
+        <span>ФИО / Имя *</span>
+        <input type="text" name="full_name" value="{{ current_user.full_name }}" required />
+      </label>
+      <label class="field">
+        <span>Телефон *</span>
+        <input type="text" name="phone" value="{{ current_user.phone }}" required />
+      </label>
+      <label class="field">
+        <span>Тема обращения</span>
+        <select name="inquiry_type">
+          <option value="Консультация по покупке">Консультация по покупке</option>
+          <option value="Продажа недвижимости">Продажа недвижимости</option>
+          <option value="Запись на просмотр">Запись на просмотр</option>
+          <option value="Оформление договора">Оформление договора</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>Интересующий объект</span>
+        <select name="property_id">
+          <option value="0">— Не выбран —</option>
+          {% for p in properties %}
+          <option value="{{ p.id_property }}">{{ p.address }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+    <label class="field">
+      <span>Сообщение</span>
+      <textarea name="message" rows="2" placeholder="Детали вопроса..."></textarea>
+    </label>
+    <div>
+      <button type="submit" class="btn btn-primary">Отправить обращение</button>
+    </div>
+  </form>
+</section>
+
+<section class="card section-gap">
+  <h2>Список обращений ({{ inquiries | length }})</h2>
+  {% if inquiries %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Дата</th>
+          <th>Заявитель</th>
+          <th>Тема и комментарий</th>
+          <th>Статус</th>
+          {% if is_staff %}
+          <th>Обработка</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in inquiries %}
+        <tr>
+          <td class="tabular">{{ item.created_at | dt }}</td>
+          <td>
+            <strong>{{ item.full_name }}</strong><br />
+            <span class="muted text-xs tabular">{{ item.phone }}{% if item.email %} • {{ item.email }}{% endif %}</span>
+          </td>
+          <td>
+            <strong>{{ item.inquiry_type }}</strong>
+            {% if item.property_obj %}
+            <div class="cell-note">Объект: {{ item.property_obj.address }}</div>
+            {% endif %}
+            {% if item.message %}
+            <div class="cell-line">{{ item.message }}</div>
+            {% endif %}
+          </td>
+          <td>
+            <span class="status-tag {% if item.status == 'Закрыто' %}ok{% elif item.status == 'Новое' %}warn{% endif %}">
+              {{ item.status }}
+            </span>
+          </td>
+          {% if is_staff %}
+          <td>
+            <form method="post" action="/inquiries/{{ item.id_inquiry }}/status" class="actions-row">
+              <select name="status" class="select-compact">
+                {% for st in ["Новое", "В работе", "Назначен показ", "Закрыто"] %}
+                <option value="{{ st }}" {% if item.status == st %}selected{% endif %}>{{ st }}</option>
+                {% endfor %}
+              </select>
+              <select name="assigned_realtor_id" class="select-compact">
+                <option value="">Ответственный...</option>
+                {% for r in realtors %}
+                <option value="{{ r.id_user }}" {% if item.assigned_realtor_id == r.id_user %}selected{% endif %}>{{ r.full_name }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="btn btn-small">Сохранить</button>
+            </form>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">Обращений пока нет.</p>
+  {% endif %}
+</section>
+{% endblock %}
